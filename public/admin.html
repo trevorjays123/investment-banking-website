@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - Apex Capital</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1a3a5c;
+      --secondary-color: #2c5282;
+      --accent-color: #4a90d9;
+      --success-color: #38a169;
+      --warning-color: #d69e2e;
+      --danger-color: #e53e3e;
+      --sidebar-width: 260px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f2f5;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      padding: 20px 0;
+      overflow-y: auto;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-header {
+      padding: 0 20px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .sidebar-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .sidebar-header p {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .sidebar-nav {
+      padding: 20px 0;
+    }
+
+    .nav-item {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    .nav-item i {
+      font-size: 1.2rem;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: 20px 30px;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .admin-header h1 {
+      font-size: 1.75rem;
+      color: var(--primary-color);
+    }
+
+    .admin-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .admin-info .badge {
+      background: var(--accent-color);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    /* Metric Cards */
+    .metric-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+
+    .metric-card .icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    .metric-card .icon.users { background: rgba(74, 144, 217, 0.15); color: var(--accent-color); }
+    .metric-card .icon.investments { background: rgba(56, 161, 105, 0.15); color: var(--success-color); }
+    .metric-card .icon.revenue { background: rgba(214, 158, 46, 0.15); color: var(--warning-color); }
+    .metric-card .icon.transactions { background: rgba(229, 62, 62, 0.15); color: var(--danger-color); }
+
+    .metric-card h3 {
+      font-size: 0.9rem;
+      color: #718096;
+      margin-bottom: 8px;
+    }
+
+    .metric-card .value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .metric-card .change {
+      font-size: 0.85rem;
+      margin-top: 8px;
+    }
+
+    .metric-card .change.positive { color: var(--success-color); }
+    .metric-card .change.negative { color: var(--danger-color); }
+
+    /* Chart Container */
+    .chart-container {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 30px;
+    }
+
+    .chart-container h4 {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .chart-wrapper {
+      position: relative;
+      height: 300px;
+    }
+
+    /* Data Table */
+    .data-table-container {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .table-header h4 {
+      color: var(--primary-color);
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-box input {
+      padding: 8px 15px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      width: 250px;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .data-table th {
+      text-align: left;
+      padding: 12px 15px;
+      background: #f7fafc;
+      color: #4a5568;
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .data-table td {
+      padding: 15px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #2d3748;
+    }
+
+    .data-table tr:hover {
+      background: #f7fafc;
+    }
+
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .status-badge.active { background: rgba(56, 161, 105, 0.15); color: var(--success-color); }
+    .status-badge.frozen { background: rgba(214, 158, 46, 0.15); color: var(--warning-color); }
+    .status-badge.closed { background: rgba(229, 62, 62, 0.15); color: var(--danger-color); }
+    .status-badge.admin { background: rgba(74, 144, 217, 0.15); color: var(--accent-color); }
+    .status-badge.user { background: rgba(113, 128, 150, 0.15); color: #718096; }
+
+    .action-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn.view { background: rgba(74, 144, 217, 0.15); color: var(--accent-color); }
+    .action-btn.edit { background: rgba(214, 158, 46, 0.15); color: var(--warning-color); }
+    .action-btn.delete { background: rgba(229, 62, 62, 0.15); color: var(--danger-color); }
+
+    .action-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* Pagination */
+    .pagination-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .pagination-info {
+      color: #718096;
+      font-size: 0.9rem;
+    }
+
+    .pagination-buttons {
+      display: flex;
+      gap: 5px;
+    }
+
+    .page-btn {
+      padding: 8px 15px;
+      border: 1px solid #e2e8f0;
+      background: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .page-btn:hover, .page-btn.active {
+      background: var(--accent-color);
+      color: white;
+      border-color: var(--accent-color);
+    }
+
+    .page-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h5 {
+      color: var(--primary-color);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #718096;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-footer {
+      padding: 15px 24px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #4a5568;
+      font-weight: 500;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--secondary-color);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #4a5568;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .btn-danger {
+      background: var(--danger-color);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .metric-card {
+        margin-bottom: 20px;
+      }
+    }
+
+    /* Loading Spinner */
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #e2e8f0;
+      border-top-color: var(--accent-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 3000;
+    }
+
+    .toast {
+      background: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.3s ease;
+    }
+
+    .toast.success { border-left: 4px solid var(--success-color); }
+    .toast.error { border-left: 4px solid var(--danger-color); }
+    .toast.warning { border-left: 4px solid var(--warning-color); }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>Apex Capital</h2>
+      <p>Admin Dashboard</p>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item active" data-section="dashboard">
+        <i class="bi bi-speedometer2"></i>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-item" data-section="users">
+        <i class="bi bi-people"></i>
+        <span>User Management</span>
+      </a>
+      <a class="nav-item" data-section="investments">
+        <i class="bi bi-graph-up-arrow"></i>
+        <span>Investments</span>
+      </a>
+      <a class="nav-item" data-section="transactions">
+        <i class="bi bi-arrow-left-right"></i>
+        <span>Transactions</span>
+      </a>
+      <a class="nav-item" data-section="revenue">
+        <i class="bi bi-currency-dollar"></i>
+        <span>Revenue</span>
+      </a>
+      <a class="nav-item" data-section="audit">
+        <i class="bi bi-clipboard-data"></i>
+        <span>Audit Logs</span>
+      </a>
+      <a class="nav-item" id="logoutBtn">
+        <i class="bi bi-box-arrow-left"></i>
+        <span>Logout</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Header -->
+    <header class="admin-header">
+      <h1 id="pageTitle">Dashboard Overview</h1>
+      <div class="admin-info">
+        <span class="badge">Administrator</span>
+        <span id="adminName">Admin</span>
+      </div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section id="dashboardSection" class="content-section">
+      <!-- Metric Cards -->
+      <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-3">
+          <div class="metric-card">
+            <div class="icon users"><i class="bi bi-people-fill"></i></div>
+            <h3>Total Users</h3>
+            <div class="value" id="totalUsers">-</div>
+            <div class="change positive" id="usersChange">Loading...</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+          <div class="metric-card">
+            <div class="icon investments"><i class="bi bi-graph-up-arrow"></i></div>
+            <h3>Total Investments</h3>
+            <div class="value" id="totalInvestments">-</div>
+            <div class="change positive" id="investmentsChange">Active investments</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+          <div class="metric-card">
+            <div class="icon revenue"><i class="bi bi-currency-dollar"></i></div>
+            <h3>Today's Revenue</h3>
+            <div class="value" id="todayRevenue">-</div>
+            <div class="change positive" id="revenueChange">Loading...</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+          <div class="metric-card">
+            <div class="icon transactions"><i class="bi bi-arrow-left-right"></i></div>
+            <h3>Total Transactions</h3>
+            <div class="value" id="totalTransactions">-</div>
+            <div class="change positive" id="transactionsVolume">Volume: -</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Revenue Chart -->
+      <div class="chart-container">
+        <h4>Daily Revenue (Last 30 Days)</h4>
+        <div class="chart-wrapper">
+          <canvas id="revenueChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="data-table-container">
+        <div class="table-header">
+          <h4>Recent Activity</h4>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="recentActivityTable">
+            <tr>
+              <td colspan="5" class="text-center">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Users Section -->
+    <section id="usersSection" class="content-section hidden">
+      <div class="data-table-container">
+        <div class="table-header">
+          <h4>User Management</h4>
+          <div class="search-box">
+            <input type="text" id="userSearch" placeholder="Search users...">
+            <button class="btn-primary" onclick="showCreateUserModal()">
+              <i class="bi bi-plus-lg"></i> Add User
+            </button>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Accounts</th>
+              <th>Balance</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTable">
+            <tr>
+              <td colspan="8" class="text-center">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination-container">
+          <div class="pagination-info" id="usersPaginationInfo">Showing 0 of 0 users</div>
+          <div class="pagination-buttons" id="usersPagination"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Investments Section -->
+    <section id="investmentsSection" class="content-section hidden">
+      <div class="data-table-container">
+        <div class="table-header">
+          <h4>Investment Management</h4>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>User</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Expected Return</th>
+              <th>Status</th>
+              <th>Start Date</th>
+              <th>Maturity</th>
+            </tr>
+          </thead>
+          <tbody id="investmentsTable">
+            <tr>
+              <td colspan="8" class="text-center">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination-container">
+          <div class="pagination-info" id="investmentsPaginationInfo">Showing 0 of 0 investments</div>
+          <div class="pagination-buttons" id="investmentsPagination"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Transactions Section -->
+    <section id="transactionsSection" class="content-section hidden">
+      <div class="data-table-container">
+        <div class="table-header">
+          <h4>Transaction Management</h4>
+          <div class="search-box">
+            <select id="transactionStatusFilter" title="Filter transactions by status">
+              <option value="">All Status</option>
+              <option value="completed">Completed</option>
+              <option value="pending">Pending</option>
+              <option value="failed">Failed</option>
+            </select>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="transactionsTable">
+            <tr>
+              <td colspan="7" class="text-center">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination-container">
+          <div class="pagination-info" id="transactionsPaginationInfo">Showing 0 of 0 transactions</div>
+          <div class="pagination-buttons" id="transactionsPagination"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Revenue Section -->
+    <section id="revenueSection" class="content-section hidden">
+      <div class="chart-container">
+        <h4>Revenue Breakdown</h4>
+        <div class="chart-wrapper">
+          <canvas id="revenueBreakdownChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Audit Logs Section -->
+    <section id="auditSection" class="content-section hidden">
+      <div class="data-table-container">
+        <div class="table-header">
+          <h4>Admin Audit Logs</h4>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Admin</th>
+              <th>Action</th>
+              <th>Target</th>
+              <th>Details</th>
+              <th>IP Address</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="auditLogsTable">
+            <tr>
+              <td colspan="7" class="text-center">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination-container">
+          <div class="pagination-info" id="auditPaginationInfo">Showing 0 of 0 logs</div>
+          <div class="pagination-buttons" id="auditPagination"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- User Modal -->
+  <div class="modal-overlay" id="userModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="userModalTitle">User Details</h5>
+        <button class="modal-close" onclick="closeUserModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="userModalBody">
+        <!-- Dynamic content -->
+      </div>
+      <div class="modal-footer" id="userModalFooter">
+        <button class="btn-secondary" onclick="closeUserModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

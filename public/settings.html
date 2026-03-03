@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Settings | Apex Capital - Investment Banking</title>
+    <meta name="title" content="Settings | Apex Capital - Investment Banking">
+    <meta name="description" content="Manage your Apex Capital account settings, profile information, security preferences, and notification settings.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Settings | Apex Capital - Investment Banking">
+    <meta property="og:description" content="Manage your Apex Capital account settings and preferences.">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    
+    <!-- MS Applications (Windows tiles) -->
+    <meta name="msapplication-TileColor" content="#0a192f">
+    <meta name="msapplication-navbutton-color" content="#0a192f">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%230a192f' width='32' height='32' rx='4'/%3E%3Cpath fill='%23d4a853' d='M8 22V10h3v9h6v3H8z'/%3E%3C/svg%3E">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8'
+                        },
+                        dark: {
+                            900: '#0a192f',
+                            800: '#112240',
+                            700: '#1a3a52'
+                        },
+                        accent: {
+                            gold: '#d4a853'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <style>
+        .sidebar {
+            transition: transform 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                z-index: 40;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .settings-tab.active {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-left-color: #3b82f6;
+            color: white;
+        }
+        
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #374151;
+            border-radius: 24px;
+            transition: 0.3s;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: #3b82f6;
+        }
+        
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+        
+        /* Avatar Upload */
+        .avatar-upload {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .avatar-upload:hover .avatar-overlay {
+            opacity: 1;
+        }
+        
+        .avatar-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-white min-h-screen">
+    <!-- Skip Link -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-lg z-50">
+        Skip to main content
+    </a>
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation (Same as dashboard) -->
+        <aside class="sidebar w-64 bg-dark-800 border-r border-gray-700 flex-shrink-0" id="sidebar">
+            <div class="sticky top-0 h-screen overflow-y-auto">
+                <div class="p-6 border-b border-gray-700">
+                    <a href="/dashboard.html" class="flex items-center gap-3">
+                        <svg viewBox="0 0 40 40" fill="none" class="w-10 h-10">
+                            <rect width="40" height="40" rx="8" fill="#0a192f"/>
+                            <path d="M10 27V13h4v10h8v4H10z" fill="#d4a853"/>
+                        </svg>
+                        <span class="font-serif text-xl font-semibold text-white">Apex Capital</span>
+                    </a>
+                </div>
+                
+                <nav class="p-4" aria-label="Main navigation">
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="/dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-th-large w-5 text-center"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/dashboard.html#accounts" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-wallet w-5 text-center"></i>
+                                <span>Accounts</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/dashboard.html#transactions" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-exchange-alt w-5 text-center"></i>
+                                <span>Transactions</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/dashboard.html#transfer" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-paper-plane w-5 text-center"></i>
+                                <span>Transfer</span>
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <hr class="my-4 border-gray-700">
+                    
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="#" class="settings-tab active flex items-center gap-3 px-4 py-3 rounded-lg border-l-2 border-transparent" data-tab="profile">
+                                <i class="fas fa-cog w-5 text-center"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col min-w-0">
+            <!-- Header -->
+            <header class="bg-dark-800 border-b border-gray-700 sticky top-0 z-30">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <button class="md:hidden text-gray-400 hover:text-white" onclick="toggleSidebar()" aria-label="Toggle menu">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    
+                    <div>
+                        <h1 class="text-xl font-semibold">Settings</h1>
+                        <p class="text-sm text-gray-400">Manage your account preferences</p>
+                    </div>
+                    
+                    <div class="flex items-center gap-3">
+                        <div class="hidden sm:block text-right">
+                            <p class="text-sm font-medium text-white" id="userName">Loading...</p>
+                            <p class="text-xs text-gray-400" id="userEmail"></p>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
+                            <span id="userInitials">U</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main id="main-content" class="flex-1 p-6 overflow-y-auto" role="main">
+                <div class="max-w-4xl mx-auto">
+                    <!-- Settings Navigation -->
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <!-- Settings Tabs -->
+                        <nav class="md:w-56 flex-shrink-0" aria-label="Settings navigation">
+                            <ul class="space-y-1">
+                                <li>
+                                    <button class="settings-tab active w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg border-l-2 border-transparent text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" data-tab="profile">
+                                        <i class="fas fa-user w-5"></i>
+                                        <span>Profile</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="settings-tab w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg border-l-2 border-transparent text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" data-tab="security">
+                                        <i class="fas fa-shield-alt w-5"></i>
+                                        <span>Security</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="settings-tab w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg border-l-2 border-transparent text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" data-tab="notifications">
+                                        <i class="fas fa-bell w-5"></i>
+                                        <span>Notifications</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="settings-tab w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg border-l-2 border-transparent text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" data-tab="preferences">
+                                        <i class="fas fa-sliders-h w-5"></i>
+                                        <span>Preferences</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="settings-tab w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg border-l-2 border-transparent text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" data-tab="privacy">
+                                        <i class="fas fa-lock w-5"></i>
+                                        <span>Privacy</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </nav>
+
+                        <!-- Settings Content -->
+                        <div class="flex-1">
+                            <!-- Profile Tab -->
+                            <section id="tab-profile" class="tab-content active">
+                                <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                                    <div class="p-6 border-b border-gray-700">
+                                        <h2 class="text-lg font-semibold">Profile Information</h2>
+                                        <p class="text-sm text-gray-400">Update your personal information</p>
+                                    </div>
+                                    
+                                    <form id="profile-form" class="p-6 space-y-6">
+                                        <!-- Avatar -->
+                                        <div class="flex items-center gap-6">
+                                            <div class="avatar-upload">
+                                                <div class="w-24 h-24 rounded-full bg-blue-600 flex items-center justify-center text-3xl font-bold" id="avatar-display">
+                                                    <span id="avatar-initials">U</span>
+                                                </div>
+                                                <div class="avatar-overlay">
+                                                    <i class="fas fa-camera text-white text-xl"></i>
+                                                </div>
+                                                <input type="file" id="avatar-input" name="avatar" accept="image/*" class="hidden" aria-label="Upload profile photo" title="Upload profile photo">
+                                            </div>
+                                            <div>
+                                                <button type="button" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors" onclick="document.getElementById('avatar-input').click()">
+                                                    Change Photo
+                                                </button>
+                                                <p class="text-xs text-gray-400 mt-2">JPG, PNG. Max 2MB</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Name Fields -->
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div class="form-group">
+                                                <label for="first_name" class="block text-sm font-medium text-gray-300 mb-1">First Name</label>
+                                                <input type="text" id="first_name" name="first_name" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="last_name" class="block text-sm font-medium text-gray-300 mb-1">Last Name</label>
+                                                <input type="text" id="last_name" name="last_name" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Email -->
+                                        <div class="form-group">
+                                            <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
+                                            <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-opacity-50" disabled>
+                                            <p class="text-xs text-gray-400 mt-1">Contact support to change your email</p>
+                                        </div>
+                                        
+                                        <!-- Phone -->
+                                        <div class="form-group">
+                                            <label for="phone" class="block text-sm font-medium text-gray-300 mb-1">Phone Number</label>
+                                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" placeholder="+1 (555) 000-0000">
+                                        </div>
+                                        
+                                        <!-- Address -->
+                                        <div class="form-group">
+                                            <label for="address" class="block text-sm font-medium text-gray-300 mb-1">Address</label>
+                                            <textarea id="address" name="address" rows="3" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" placeholder="Enter your address"></textarea>
+                                        </div>
+                                        
+                                        <!-- Submit -->
+                                        <div class="flex justify-end gap-3">
+                                            <button type="button" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors" onclick="resetProfileForm()">
+                                                Cancel
+                                            </button>
+                                            <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
+                                                Save Changes
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </section>
+
+                            <!-- Security Tab -->
+                            <section id="tab-security" class="tab-content">
+                                <div class="space-y-6">
+                                    <!-- Change Password -->
+                                    <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                                        <div class="p-6 border-b border-gray-700">
+                                            <h2 class="text-lg font-semibold">Change Password</h2>
+                                            <p class="text-sm text-gray-400">Update your password regularly for security</p>
+                                        </div>
+                                        
+                                        <form id="password-form" class="p-6 space-y-4">
+                                            <div class="form-group">
+                                                <label for="current_password" class="block text-sm font-medium text-gray-300 mb-1">Current Password</label>
+                                                <input type="password" id="current_password" name="current_password" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="new_password" class="block text-sm font-medium text-gray-300 mb-1">New Password</label>
+                                                <input type="password" id="new_password" name="new_password" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500" required minlength="8">
+                                                <p class="text-xs text-gray-400 mt-1">Minimum 8 characters with uppercase, lowercase, number, and special character</p>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="confirm_password" class="block text-sm font-medium text-gray-300 mb-1">Confirm New Password</label>
+                                                <input type="password" id="confirm_password" name="confirm_password" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500" required>
+                                            </div>
+                                            
+                                            <button type="submit" class="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
+                                                Update Password
+                                            </button>
+                                        </form>
+                                    </div>
+                                    
+                                    <!-- Two-Factor Authentication -->
+                                    <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                                        <div class="p-6 border-b border-gray-700">
+                                            <h2 class="text-lg font-semibold">Two-Factor Authentication</h2>
+                                            <p class="text-sm text-gray-400">Add an extra layer of security to your account</p>
+                                        </div>
+                                        
+                                        <div class="p-6">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-4">
+                                                    <div class="w-12 h-12 rounded-full bg-green-600 bg-opacity-20 flex items-center justify-center">
+                                                        <i class="fas fa-shield-alt text-green-400 text-xl"></i>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-medium text-white">Authenticator App</p>
+                                                        <p class="text-sm text-gray-400" id="2fa-status">Not enabled</p>
+                                                    </div>
+                                                </div>
+                                                <button type="button" id="toggle-2fa" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors">
+                                                    Enable
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Active Sessions -->
+                                    <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                                        <div class="p-6 border-b border-gray-700">
+                                            <h2 class="text-lg font-semibold">Active Sessions</h2>
+                                            <p class="text-sm text-gray-400">Manage your active login sessions</p>
+                                        </div>
+                                        
+                                        <div id="sessions-list" class="divide-y divide-gray-700">
+                                            <!-- Sessions will be loaded here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Notifications Tab -->
+                            <section id="tab-notifications" class="tab-content">
+                                <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                                    <div class="p-6 border-b border-gray-700">
+                                        <h2 class="text-lg font-semibold">Notification Preferences</h2>
+                                        <p class="text-sm text-gray-400">Choose how you want to be notified</p>
+                                    </div>
+                                    
+                                    <form id="notifications-form" class="p-6 space-y-6">
+                                        <!-- Email Notifications -->
+                                        <div>
+                                            <h3 class="text-sm font-medium text-white mb-4">Email Notifications</h3>
+                                            <div class="space-y-4">
+                                                <div class="flex items-center justify-between">
+                                                    <div>
+                                                        <p class="text-white">Transaction Alerts</p>
+                                                        <p class="text-sm text-gray-400">Get notified for all transactions</p>
+                                                    </div>
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" name="email_transactions" checked aria-label="Enable transaction email alerts" title="Toggle transaction email alerts">
+                                                        <span class="toggle-slider"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="flex items-center justify-between">
+                                                    <div>
+                                                        <p class="text-white">Security Alerts</p>
+                                                        <p class="text-sm text-gray-400">Login attempts and security events</p>
+                                                    </div>
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" name="email_security" checked aria-label="Enable security email alerts" title="Toggle security email alerts">
+                                                        <span class="toggle-slider"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="flex items-center justify-between">
+                                                    <div>
+                                                        <p class="text-white">Marketing Emails</p>
+                                                        <p class="text-sm text-gray-400">Product updates and offers</p>
+                                                    </div>
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" name="email_marketing" aria-label="Enable marketing emails" title="Toggle marketing emails">
+                                                        <span class="toggle-slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- SMS Notifications -->
+                                        <div>
+                                            <h3 class="text-sm font-medium text-white mb-4">SMS Notifications</h3>
+                                            <div class="space-y-4">
+                                                <div class="flex items-center justify-between">
+                                                    <div>
+                                                        <p class="text-white">Transaction Alerts</p>
+                                                        <p class="text-sm text-gray-400">Get SMS for transactions over $100</p>
+                                                    </div>
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" name="sms_transactions" aria-label="Enable SMS transaction alerts" title="Toggle SMS transaction alerts">
+                                                        <span class="toggle-slider"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="flex items-center justify-between">
+                                                    <div>
+                                                        <p class="text-white">Security Alerts</p>
+                                                        <p class="text-sm text-gray-400">Two-factor codes and security events</p>
+                                                    </div>
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" name="sms_security" checked aria-label="Enable SMS security alerts" title="Toggle SMS security alerts">
+                                                        <span class="toggle-slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Push Notifications -->
+                                        <div>
+                                            <h3 class="text-sm font-medium text-white mb-4">Push Notifications</h3>
+                                            <div class="space-y-4">
+                                                <div class="flex items-center justify-between">
+                                                    <div>
+                                                        <p class="text-white">All Notifications</p>
+                                                        <p class="text-sm text-gray-400">Receive browser push notifications</p>
+                                                    </div>
+                                                    <label class="toggle-switch">
+                                                        <input type="checkbox" name="push_enabled" checked aria-label="Enable push notifications" title="Toggle push notifications">
+                                                        <span class="toggle-slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <button type="submit" class="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
+                                            Save Preferences
+                                        </button>
+                                    </form>
+                                </div>
+                            </section>
+
+                            <!-- Preferences Tab -->
+                            <section id="tab-preferences" class="tab-content">
+                                <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                                    <div class="p-6 border-b border-gray-700">
+                                        <h2 class="text-lg font-semibold">Display Preferences</h2>
+                                        <p class="text-sm text-gray-400">Customize your experience</p>
+                                    </div>
+                                    
+                                    <form id="preferences-form" class="p-6 space-y-6">
+                                        <!-- Language -->
+                                        <div class="form-group">
+                                            <label for="language" class="block text-sm font-medium text-gray-300 mb-1">Language</label>
+                                            <select id="language" name="language" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                                                <option value="en">English (US)</option>
+                                                <option value="en-gb">English (UK)</option>
+                                                <option value="es">Spanish</option>
+                                                <option value="fr">French</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- Currency -->
+                                        <div class="form-group">
+                                            <label for="currency" class="block text-sm font-medium text-gray-300 mb-1">Display Currency</label>
+                                            <select id="currency" name="currency" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                                                <option value="USD">USD - US Dollar</option>
+                                                <option value="EUR">EUR - Euro</option>
+                                                <option value="GBP">GBP - British Pound</option>
+                                                <option value="NGN">NGN - Nigerian Naira</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- Timezone -->
+                                        <div class="form-group">
+                                            <label for="timezone" class="block text-sm font-medium text-gray-300 mb-1">Timezone</label>
+                                            <select id="timezone" name="timezone" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                                                <option value="America/New_York">Eastern Time (ET)</option>
+                                                <option value="America/Chicago">Central Time (CT)</option>
+                                                <option value="America/Denver">Mountain Time (MT)</option>
+                                                <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                                                <option value="Europe/London">London (GMT)</option>
+                                                <option value="Africa/Lagos" selected>Lagos (WAT)</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- Date Format -->
+                                        <div class="form-group">
+                                            <label for="date_format" class="block text-sm font-medium text-gray-300 mb-1">Date Format</label>
+                                            <select id="date_format" name="date_format" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                                                <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                                <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <button type="submit" class="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
+                                            Save Preferences
+                                        </button>
+                                    </form>
+                                </div>
+                            </section>
+
+                            <!-- Privacy Tab -->
+                            <section id="tab-privacy" class="tab-content">
+                                <div class="space-y-6">
+                                    <!-- Data Privacy -->
+                                    <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                                        <div class="p-6 border-b border-gray-700">
+                                            <h2 class="text-lg font-semibold">Data Privacy</h2>
+                                            <p class="text-sm text-gray-400">Control your data and privacy settings</p>
+                                        </div>
+                                        
+                                        <div class="p-6 space-y-6">
+                                            <div class="flex items-center justify-between">
+                                                <div>
+                                                    <p class="text-white">Analytics & Usage Data</p>
+                                                    <p class="text-sm text-gray-400">Help us improve by sharing anonymous usage data</p>
+                                                </div>
+                                                <label class="toggle-switch">
+                                                    <input type="checkbox" name="analytics" checked aria-label="Enable analytics and usage data sharing" title="Toggle analytics and usage data sharing">
+                                                    <span class="toggle-slider"></span>
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="flex items-center justify-between">
+                                                <div>
+                                                    <p class="text-white">Personalization</p>
+                                                    <p class="text-sm text-gray-400">Personalize your experience based on your activity</p>
+                                                </div>
+                                                <label class="toggle-switch">
+                                                    <input type="checkbox" name="personalization" checked aria-label="Enable personalization" title="Toggle personalization">
+                                                    <span class="toggle-slider"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Account Actions -->
+                                    <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                                        <div class="p-6 border-b border-gray-700">
+                                            <h2 class="text-lg font-semibold">Account Actions</h2>
+                                            <p class="text-sm text-gray-400">Manage your account data</p>
+                                        </div>
+                                        
+                                        <div class="p-6 space-y-4">
+                                            <button type="button" class="w-full px-4 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-medium transition-colors text-left flex items-center justify-between" onclick="downloadData()">
+                                                <span><i class="fas fa-download mr-2"></i>Download My Data</span>
+                                                <i class="fas fa-chevron-right text-gray-400"></i>
+                                            </button>
+                                            
+                                            <button type="button" class="w-full px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors text-left" onclick="confirmDeleteAccount()">
+                                                <i class="fas fa-trash mr-2"></i>Delete Account
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"></div>
+    
+    <!-- Modal Container -->
+    <div id="modal-container"></div>
+
+    <!-- Scripts -->
+    <script src="/js/utils.js"></script>
+    <script src="/js/api.service.js"></script>
+    <script src="/js/validation.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    
+    <script>
+        // State
+        let userData = {};
+        let preferences = {};
+        let securitySettings = {};
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check auth
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/';
+                return;
+            }
+            
+            // Load user data
+            loadProfile();
+            loadPreferences();
+            loadSecuritySettings();
+            loadSessions();
+            
+            // Setup tab navigation
+            setupTabs();
+            
+            // Setup forms
+            setupForms();
+        });
+        
+        // Tab Navigation
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.settings-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Update tab styles
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Show content
+                    const tabId = tab.dataset.tab;
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(`tab-${tabId}`).classList.add('active');
+                });
+            });
+        }
+        
+        // Load Profile
+        async function loadProfile() {
+            try {
+                const data = await API.get('/profile');
+                userData = data.user;
+                
+                // Populate form
+                document.getElementById('first_name').value = userData.first_name || '';
+                document.getElementById('last_name').value = userData.last_name || '';
+                document.getElementById('email').value = userData.email || '';
+                document.getElementById('phone').value = userData.phone || '';
+                document.getElementById('address').value = userData.address || '';
+                
+                // Update header
+                const userName = `${userData.first_name || ''} ${userData.last_name || ''}`.trim() || 'User';
+                document.getElementById('userName').textContent = userName;
+                document.getElementById('userEmail').textContent = userData.email || '';
+                
+                // Update initials
+                const initials = (userData.first_name?.[0] || 'U') + (userData.last_name?.[0] || '');
+                document.getElementById('userInitials').textContent = initials;
+                document.getElementById('avatar-initials').textContent = initials;
+                
+            } catch (error) {
+                showToast('Failed to load profile', 'error');
+            }
+        }
+        
+        // Setup Forms
+        function setupForms() {
+            // Profile form
+            document.getElementById('profile-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await updateProfile();
+            });
+            
+            // Password form
+            document.getElementById('password-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await changePassword();
+            });
+            
+            // Notifications form
+            document.getElementById('notifications-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await updateNotificationPreferences();
+            });
+            
+            // Preferences form
+            document.getElementById('preferences-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await updateDisplayPreferences();
+            });
+            
+            // Privacy toggles
+            document.querySelector('input[name="analytics"]').addEventListener('change', async (e) => {
+                await updatePrivacySettings();
+            });
+            document.querySelector('input[name="personalization"]').addEventListener('change', async (e) => {
+                await updatePrivacySettings();
+            });
+        }
+        
+        // Update Profile
+        async function updateProfile() {
+            const form = document.getElementById('profile-form');
+            const btn = form.querySelector('button[type="submit"]');
+            
+            Components.setButtonLoading(btn, 'Saving...');
+            
+            try {
+                await API.put('/profile', {
+                    first_name: document.getElementById('first_name').value,
+                    last_name: document.getElementById('last_name').value,
+                    phone: document.getElementById('phone').value,
+                    address: document.getElementById('address').value
+                });
+                
+                showToast('Profile updated successfully', 'success');
+                await loadProfile();
+                
+            } catch (error) {
+                showToast(error.message || 'Failed to update profile', 'error');
+            } finally {
+                Components.resetButton(btn);
+            }
+        }
+        
+        // Change Password
+        async function changePassword() {
+            const form = document.getElementById('password-form');
+            const newPassword = document.getElementById('new_password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            
+            if (newPassword !== confirmPassword) {
+                showToast('Passwords do not match', 'error');
+                return;
+            }
+            
+            const btn = form.querySelector('button[type="submit"]');
+            Components.setButtonLoading(btn, 'Updating...');
+            
+            try {
+                await API.put('/profile/password', {
+                    current_password: document.getElementById('current_password').value,
+                    new_password: newPassword
+                });
+                
+                showToast('Password changed successfully', 'success');
+                form.reset();
+                
+            } catch (error) {
+                showToast(error.message || 'Failed to change password', 'error');
+            } finally {
+                Components.resetButton(btn);
+            }
+        }
+        
+        // Load Preferences
+        async function loadPreferences() {
+            try {
+                const data = await API.get('/profile/preferences');
+                preferences = data.preferences || {};
+                
+                // Populate preferences form
+                if (preferences.language) {
+                    const langSelect = document.getElementById('language');
+                    if (langSelect) langSelect.value = preferences.language;
+                }
+                if (preferences.currency) {
+                    const currSelect = document.getElementById('currency');
+                    if (currSelect) currSelect.value = preferences.currency;
+                }
+                if (preferences.timezone) {
+                    const tzSelect = document.getElementById('timezone');
+                    if (tzSelect) tzSelect.value = preferences.timezone;
+                }
+                if (preferences.date_format) {
+                    const dfSelect = document.getElementById('date_format');
+                    if (dfSelect) dfSelect.value = preferences.date_format;
+                }
+                
+                // Populate notification toggles
+                const notifForm = document.getElementById('notifications-form');
+                if (notifForm) {
+                    const toggles = ['email_transactions', 'email_security', 'email_marketing', 
+                                    'sms_transactions', 'sms_security', 'push_enabled'];
+                    toggles.forEach(toggle => {
+                        const input = notifForm.querySelector(`input[name="${toggle}"]`);
+                        if (input && preferences[toggle] !== undefined) {
+                            input.checked = preferences[toggle];
+                        }
+                    });
+                }
+                
+                // Populate privacy toggles
+                const analyticsToggle = document.querySelector('input[name="analytics"]');
+                if (analyticsToggle && preferences.analytics_enabled !== undefined) {
+                    analyticsToggle.checked = preferences.analytics_enabled;
+                }
+                const personalizationToggle = document.querySelector('input[name="personalization"]');
+                if (personalizationToggle && preferences.personalization_enabled !== undefined) {
+                    personalizationToggle.checked = preferences.personalization_enabled;
+                }
+                
+            } catch (error) {
+                console.error('Failed to load preferences:', error);
+            }
+        }
+        
+        // Load Security Settings
+        async function loadSecuritySettings() {
+            try {
+                const data = await API.get('/profile/security');
+                securitySettings = data;
+                
+                // Update 2FA status
+                const statusEl = document.getElementById('2fa-status');
+                const toggleBtn = document.getElementById('toggle-2fa');
+                
+                if (securitySettings.two_factor_enabled) {
+                    statusEl.textContent = 'Enabled';
+                    statusEl.classList.add('text-green-400');
+                    toggleBtn.textContent = 'Disable';
+                    toggleBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                    toggleBtn.classList.add('bg-red-600', 'hover:bg-red-700');
+                } else {
+                    statusEl.textContent = 'Not enabled';
+                    statusEl.classList.remove('text-green-400');
+                    toggleBtn.textContent = 'Enable';
+                    toggleBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                    toggleBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+                }
+                
+                // Setup 2FA toggle handler
+                toggleBtn.onclick = () => toggle2FA();
+                
+            } catch (error) {
+                console.error('Failed to load security settings:', error);
+            }
+        }
+        
+        // Toggle 2FA
+        async function toggle2FA() {
+            const toggleBtn = document.getElementById('toggle-2fa');
+            const isEnabled = securitySettings.two_factor_enabled;
+            
+            try {
+                toggleBtn.disabled = true;
+                toggleBtn.textContent = 'Processing...';
+                
+                if (isEnabled) {
+                    await API.post('/auth/disable-2fa');
+                    showToast('Two-factor authentication disabled', 'success');
+                } else {
+                    const data = await API.post('/auth/enable-2fa');
+                    showToast('Two-factor authentication enabled', 'success');
+                    if (data.secret) {
+                        alert(`Your 2FA secret: ${data.secret}\n\nStore this securely. You'll need it for authenticator apps.`);
+                    }
+                }
+                
+                await loadSecuritySettings();
+                
+            } catch (error) {
+                showToast(error.message || 'Failed to update 2FA settings', 'error');
+                toggleBtn.textContent = isEnabled ? 'Disable' : 'Enable';
+            } finally {
+                toggleBtn.disabled = false;
+            }
+        }
+        
+        // Load Sessions
+        async function loadSessions() {
+            try {
+                const data = await API.get('/profile/sessions');
+                const sessionsList = document.getElementById('sessions-list');
+                
+                if (!sessionsList || !data.sessions) return;
+                
+                sessionsList.innerHTML = data.sessions.map(session => `
+                    <div class="p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
+                                <i class="fas fa-${session.is_current ? 'laptop' : 'desktop'} text-gray-400"></i>
+                            </div>
+                            <div>
+                                <p class="text-white font-medium">
+                                    ${session.device} - ${session.browser}
+                                    ${session.is_current ? '<span class="ml-2 text-xs bg-green-600 text-white px-2 py-0.5 rounded">Current</span>' : ''}
+                                </p>
+                                <p class="text-sm text-gray-400">
+                                    ${session.ip_address} • Last active: ${formatDate(session.last_active)}
+                                </p>
+                            </div>
+                        </div>
+                        ${!session.is_current ? `
+                            <button onclick="revokeSession('${session.id}')" class="text-red-400 hover:text-red-300 text-sm">
+                                Revoke
+                            </button>
+                        ` : ''}
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Failed to load sessions:', error);
+            }
+        }
+        
+        // Revoke Session
+        async function revokeSession(sessionId) {
+            try {
+                await API.delete(`/profile/sessions/${sessionId}`);
+                showToast('Session revoked successfully', 'success');
+                await loadSessions();
+            } catch (error) {
+                showToast(error.message || 'Failed to revoke session', 'error');
+            }
+        }
+        
+        // Reset Profile Form
+        function resetProfileForm() {
+            loadProfile();
+        }
+        
+        // Download Data
+        async function downloadData() {
+            showToast('Preparing your data download...', 'info');
+            
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('/api/profile/data', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Download failed');
+                
+                const data = await response.json();
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = window.URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `user_data_${Date.now()}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+                
+                showToast('Data downloaded successfully', 'success');
+                
+            } catch (error) {
+                showToast(error.message || 'Failed to download data', 'error');
+            }
+        }
+        
+        // Delete Account Confirmation
+        async function confirmDeleteAccount() {
+            // Create modal for account deletion
+            const modalHtml = `
+                <div id="delete-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div class="bg-dark-800 rounded-xl border border-gray-700 max-w-md w-full mx-4 p-6">
+                        <h3 class="text-xl font-semibold text-white mb-4">Delete Account</h3>
+                        <p class="text-gray-400 mb-4">This action cannot be undone. All your data will be permanently deleted.</p>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div>
+                                <label class="block text-sm text-gray-300 mb-1">Enter your password</label>
+                                <input type="password" id="delete-password" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-300 mb-1">Type "DELETE" to confirm</label>
+                                <input type="text" id="delete-confirmation" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white" placeholder="DELETE">
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <button onclick="closeDeleteModal()" class="flex-1 px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium">
+                                Cancel
+                            </button>
+                            <button onclick="executeDeleteAccount()" class="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium">
+                                Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('modal-container').innerHTML = modalHtml;
+        }
+        
+        // Close Delete Modal
+        function closeDeleteModal() {
+            const modal = document.getElementById('delete-modal');
+            if (modal) modal.remove();
+        }
+        
+        // Execute Delete Account
+        async function executeDeleteAccount() {
+            const password = document.getElementById('delete-password').value;
+            const confirmation = document.getElementById('delete-confirmation').value;
+            
+            if (!password) {
+                showToast('Please enter your password', 'error');
+                return;
+            }
+            
+            if (confirmation !== 'DELETE') {
+                showToast('Please type DELETE to confirm', 'error');
+                return;
+            }
+            
+            try {
+                await API.delete('/profile/account', {
+                    password: password,
+                    confirmation: confirmation
+                });
+                
+                showToast('Account deleted successfully', 'success');
+                
+                // Clear local storage and redirect
+                localStorage.clear();
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+                
+            } catch (error) {
+                showToast(error.message || 'Failed to delete account', 'error');
+            }
+        }
+        
+        // Toggle Sidebar
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+        
+        // Toast
+        function showToast(message, type = 'info') {
+            Components.toast(message, type);
+        }
+        
+        // Format date helper
+        function formatDate(dateString) {
+            if (!dateString) return 'Unknown';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        // Update Notification Preferences
+        async function updateNotificationPreferences() {
+            const form = document.getElementById('notifications-form');
+            const btn = form.querySelector('button[type="submit"]');
+            
+            Components.setButtonLoading(btn, 'Saving...');
+            
+            try {
+                const data = {
+                    email_transactions: form.querySelector('input[name="email_transactions"]').checked,
+                    email_security: form.querySelector('input[name="email_security"]').checked,
+                    email_marketing: form.querySelector('input[name="email_marketing"]').checked,
+                    sms_transactions: form.querySelector('input[name="sms_transactions"]').checked,
+                    sms_security: form.querySelector('input[name="sms_security"]').checked,
+                    push_enabled: form.querySelector('input[name="push_enabled"]').checked
+                };
+                
+                await API.put('/profile/notifications', data);
+                showToast('Notification preferences saved', 'success');
+                
+            } catch (error) {
+                showToast(error.message || 'Failed to save preferences', 'error');
+            } finally {
+                Components.resetButton(btn);
+            }
+        }
+        
+        // Update Display Preferences
+        async function updateDisplayPreferences() {
+            const form = document.getElementById('preferences-form');
+            const btn = form.querySelector('button[type="submit"]');
+            
+            Components.setButtonLoading(btn, 'Saving...');
+            
+            try {
+                const data = {
+                    language: document.getElementById('language').value,
+                    currency: document.getElementById('currency').value,
+                    timezone: document.getElementById('timezone').value,
+                    date_format: document.getElementById('date_format').value
+                };
+                
+                await API.put('/profile/preferences', data);
+                showToast('Preferences saved', 'success');
+                
+            } catch (error) {
+                showToast(error.message || 'Failed to save preferences', 'error');
+            } finally {
+                Components.resetButton(btn);
+            }
+        }
+        
+        // Update Privacy Settings
+        async function updatePrivacySettings() {
+            try {
+                const data = {
+                    analytics_enabled: document.querySelector('input[name="analytics"]').checked,
+                    personalization_enabled: document.querySelector('input[name="personalization"]').checked
+                };
+                
+                await API.put('/profile/preferences', data);
+                showToast('Privacy settings updated', 'success');
+                
+            } catch (error) {
+                showToast(error.message || 'Failed to update privacy settings', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Apex Capital - Premier Investment Banking Services for Institutional Investors and High-Net-Worth Individuals">
+    <title>Apex Capital | Investment Banking Excellence</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    
+<!-- TailwindCSS CDN for immediate styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <!-- SVG Definitions (hidden, used for gradients) -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <defs>
+            <linearGradient id="logoGradient" x1="0" y1="0" x2="40" y2="40">
+                <stop stop-color="#0a192f"/>
+                <stop offset="1" stop-color="#112240"/>
+            </linearGradient>
+            <linearGradient id="chartGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#d4a853"/>
+                <stop offset="100%" stop-color="#f0c674"/>
+            </linearGradient>
+        </defs>
+    </svg>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%230a192f' width='32' height='32' rx='4'/%3E%3Cpath fill='%23d4a853' d='M8 22V10h3v9h6v3H8z'/%3E%3C/svg%3E">
+</head>
+<body class="landing-page">
+    <!-- Geometric Background -->
+    <div class="geometric-bg" aria-hidden="true">
+        <div class="gradient-orb gradient-orb-1"></div>
+        <div class="gradient-orb gradient-orb-2"></div>
+        <div class="gradient-orb gradient-orb-3"></div>
+        <div class="grid-pattern"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+<a href="/" class="nav-brand" aria-label="Apex Capital Home">
+                <svg class="nav-logo-icon w-10 h-10" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect width="40" height="40" rx="8" fill="url(#logoGradient)"/>
+                    <path d="M10 27V13h4v10h8v4H10z" fill="#d4a853"/>
+                </svg>
+                <span class="nav-brand-text">Apex Capital</span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#insights" class="nav-link">Insights</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="btn btn-ghost" id="loginToggle" aria-expanded="false" aria-controls="loginModal">
+                    Sign In
+                </button>
+                <button class="btn btn-primary" id="signUpToggle" aria-expanded="false" aria-controls="signUpModal">
+                    Sign Up
+                </button>
+            </div>
+            
+            <button class="nav-mobile-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="mobile-menu-content">
+            <a href="#services" class="mobile-nav-link">Services</a>
+            <a href="#about" class="mobile-nav-link">About</a>
+            <a href="#insights" class="mobile-nav-link">Insights</a>
+            <a href="#contact" class="mobile-nav-link">Contact</a>
+            <hr class="mobile-menu-divider">
+            <button class="btn btn-ghost btn-block" id="mobileLoginToggle">Sign In</button>
+            <button class="btn btn-primary btn-block" id="mobileSignUpToggle">Sign Up</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-icon">◆</span>
+                    <span>Trusted by Fortune 500 Companies</span>
+                </div>
+                <h1 class="hero-title">
+                    Where Capital Meets
+                    <span class="text-gradient">Strategic Excellence</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Premier investment banking services delivering sophisticated financial solutions 
+                    for institutional investors and high-net-worth individuals worldwide.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary btn-lg" id="heroAccessPortal">
+                        <span>Access Portal</span>
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                    <a href="#services" class="btn btn-ghost btn-lg">
+                        Explore Services
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-value">$2.4T+</span>
+                        <span class="hero-stat-label">Assets Under Advisory</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-value">150+</span>
+                        <span class="hero-stat-label">Years of Excellence</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-value">40+</span>
+                        <span class="hero-stat-label">Global Offices</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-card hero-card-main glass-card">
+                    <div class="hero-card-header">
+                        <div class="hero-card-title">Portfolio Overview</div>
+                        <div class="hero-card-badge positive">+12.4%</div>
+                    </div>
+                    <div class="hero-card-value">$4,284,392</div>
+                    <div class="hero-card-chart">
+                        <svg viewBox="0 0 200 60" class="mini-chart">
+                            <path d="M0,50 Q20,45 40,40 T80,35 T120,25 T160,30 T200,15" 
+                                  fill="none" stroke="url(#chartGradient)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="hero-card hero-card-secondary glass-card">
+                    <div class="hero-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </div>
+                    <div class="hero-card-content">
+                        <div class="hero-card-label">Recent Transaction</div>
+                        <div class="hero-card-amount">+$125,000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Indicators - Partner Logos -->
+    <section class="trust-section" aria-label="Trusted Partners">
+        <div class="trust-container">
+            <p class="trust-label">Trusted by leading financial institutions worldwide</p>
+            <div class="partner-logos">
+                <div class="partner-logo">
+                    <svg viewBox="0 0 120 40" fill="currentColor" aria-label="Goldman Partners">
+                        <text x="10" y="28" font-family="Inter" font-weight="600" font-size="14">Goldman</text>
+                    </svg>
+                </div>
+                <div class="partner-logo">
+                    <svg viewBox="0 0 120 40" fill="currentColor" aria-label="Morgan Stanley">
+                        <text x="10" y="28" font-family="Inter" font-weight="600" font-size="14">Morgan Stanley</text>
+                    </svg>
+                </div>
+                <div class="partner-logo">
+                    <svg viewBox="0 0 120 40" fill="currentColor" aria-label="JP Morgan">
+                        <text x="10" y="28" font-family="Inter" font-weight="600" font-size="14">J.P. Morgan</text>
+                    </svg>
+                </div>
+                <div class="partner-logo">
+                    <svg viewBox="0 0 120 40" fill="currentColor" aria-label="Citigroup">
+                        <text x="10" y="28" font-family="Inter" font-weight="600" font-size="14">Citigroup</text>
+                    </svg>
+                </div>
+                <div class="partner-logo">
+                    <svg viewBox="0 0 120 40" fill="currentColor" aria-label="Bank of America">
+                        <text x="10" y="28" font-family="Inter" font-weight="600" font-size="14">Bank of America</text>
+                    </svg>
+                </div>
+                <div class="partner-logo">
+                    <svg viewBox="0 0 120 40" fill="currentColor" aria-label="Barclays">
+                        <text x="10" y="28" font-family="Inter" font-weight="600" font-size="14">Barclays</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">Our Services</span>
+                <h2 class="section-title">Comprehensive Financial Solutions</h2>
+                <p class="section-subtitle">
+                    From mergers and acquisitions to capital markets, we provide end-to-end 
+                    investment banking services tailored to your strategic objectives.
+                </p>
+            </div>
+            <div class="services-grid">
+                <article class="service-card glass-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 17l6-6 4 4 8-8M14 7h7v7"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Mergers & Acquisitions</h3>
+                    <p class="service-description">
+                        Strategic advisory for complex M&A transactions, divestitures, 
+                        and restructuring with deep industry expertise.
+                    </p>
+                    <a href="#" class="service-link">
+                        Learn more
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </article>
+                <article class="service-card glass-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Capital Markets</h3>
+                    <p class="service-description">
+                        Equity and debt underwriting, IPO advisory, and capital 
+                        structure optimization for growth-oriented companies.
+                    </p>
+                    <a href="#" class="service-link">
+                        Learn more
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </article>
+                <article class="service-card glass-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Global Markets</h3>
+                    <p class="service-description">
+                        Cross-border transaction expertise, emerging market access, 
+                        and international regulatory navigation.
+                    </p>
+                    <a href="#" class="service-link">
+                        Learn more
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </article>
+                <article class="service-card glass-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Wealth Management</h3>
+                    <p class="service-description">
+                        Personalized portfolio management, estate planning, and 
+                        philanthropic advisory for ultra-high-net-worth individuals.
+                    </p>
+                    <a href="#" class="service-link">
+                        Learn more
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="section-container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <span class="section-label">About Apex Capital</span>
+                    <h2 class="section-title">A Legacy of Financial Excellence</h2>
+                    <p class="about-text">
+                        For over 150 years, Apex Capital has been at the forefront of investment banking, 
+                        guiding the world's most sophisticated investors through complex financial landscapes.
+                    </p>
+                    <p class="about-text">
+                        Our commitment to excellence, integrity, and client success has earned us the 
+                        trust of Fortune 500 companies, sovereign wealth funds, and institutional 
+                        investors across 40+ countries.
+                    </p>
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <div class="about-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <div class="about-feature-text">
+                                <strong>SEC Registered</strong>
+                                <span>Fully compliant with U.S. securities regulations</span>
+                            </div>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <div class="about-feature-text">
+                                <strong>FCA Authorized</strong>
+                                <span>Regulated by the Financial Conduct Authority</span>
+                            </div>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <div class="about-feature-text">
+                                <strong>SOC 2 Certified</strong>
+                                <span>Enterprise-grade security standards</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="about-card glass-card">
+                        <div class="about-card-header">
+                            <span class="about-card-label">Global Presence</span>
+                        </div>
+                        <div class="about-card-map">
+                            <svg viewBox="0 0 200 100" class="world-map">
+                                <ellipse cx="100" cy="50" rx="90" ry="40" fill="none" stroke="rgba(212,168,83,0.3)" stroke-width="1"/>
+                                <circle cx="45" cy="40" r="4" fill="#d4a853" class="map-dot"/>
+                                <circle cx="70" cy="35" r="4" fill="#d4a853" class="map-dot"/>
+                                <circle cx="100" cy="45" r="4" fill="#d4a853" class="map-dot"/>
+                                <circle cx="130" cy="38" r="4" fill="#d4a853" class="map-dot"/>
+                                <circle cx="155" cy="50" r="4" fill="#d4a853" class="map-dot"/>
+                                <circle cx="85" cy="60" r="4" fill="#d4a853" class="map-dot"/>
+                            </svg>
+                        </div>
+                        <div class="about-card-stats">
+                            <div class="about-stat">
+                                <span class="about-stat-value">40+</span>
+                                <span class="about-stat-label">Global Offices</span>
+                            </div>
+                            <div class="about-stat">
+                                <span class="about-stat-value">2,500+</span>
+                                <span class="about-stat-label">Professionals</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compliance Section -->
+    <section class="compliance-section">
+        <div class="section-container">
+            <div class="compliance-grid">
+                <div class="compliance-item">
+                    <svg class="compliance-icon" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2"/>
+                        <path d="M16 24l6 6 10-12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="compliance-label">SOC 2 Type II</span>
+                </div>
+                <div class="compliance-item">
+                    <svg class="compliance-icon" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2"/>
+                        <path d="M16 24l6 6 10-12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="compliance-label">ISO 27001</span>
+                </div>
+                <div class="compliance-item">
+                    <svg class="compliance-icon" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2"/>
+                        <path d="M16 24l6 6 10-12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="compliance-label">GDPR Compliant</span>
+                </div>
+                <div class="compliance-item">
+                    <svg class="compliance-icon" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2"/>
+                        <path d="M16 24l6 6 10-12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="compliance-label">PCI DSS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">Get Started</span>
+                <h2 class="section-title">Ready to Elevate Your Financial Strategy?</h2>
+                <p class="section-subtitle">
+                    Connect with our advisory team to discuss how we can help you achieve 
+                    your financial objectives.
+                </p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                        </div>
+                        <div class="contact-text">
+                            <strong>Headquarters</strong>
+                            <span>200 Park Avenue, New York, NY 10166</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                            </svg>
+                        </div>
+                        <div class="contact-text">
+                            <strong>Phone</strong>
+                            <span>+1 (212) 555-0100</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                        </div>
+                        <div class="contact-text">
+                            <strong>Email</strong>
+                            <span>advisory@apexcapital.com</span>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form glass-card" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" id="firstName" name="firstName" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company" class="form-label">Company</label>
+                        <input type="text" id="company" name="company" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea id="message" name="message" class="form-input form-textarea" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Request Consultation
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+<a href="/" class="footer-logo">
+                        <svg class="footer-logo-icon w-10 h-10" viewBox="0 0 40 40" fill="none">
+                            <rect width="40" height="40" rx="8" fill="#112240"/>
+                            <path d="M10 27V13h4v10h8v4H10z" fill="#d4a853"/>
+                        </svg>
+                        <span>Apex Capital</span>
+                    </a>
+                    <p class="footer-tagline">
+                        Delivering exceptional financial advisory services since 1873.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <h4 class="footer-heading">Services</h4>
+                    <ul class="footer-list">
+                        <li><a href="#">Mergers & Acquisitions</a></li>
+                        <li><a href="#">Capital Markets</a></li>
+                        <li><a href="#">Global Markets</a></li>
+                        <li><a href="#">Wealth Management</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4 class="footer-heading">Company</h4>
+                    <ul class="footer-list">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Insights</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="footer-list">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Compliance</a></li>
+                        <li><a href="#">Disclosures</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    © 2024 Apex Capital. All rights reserved. Member FINRA/SIPC.
+                </p>
+                <div class="footer-social">
+                    <a href="#" class="social-link" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Twitter">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" aria-hidden="true">
+        <div class="modal-backdrop"></div>
+        <div class="modal-container">
+            <div class="login-modal glass-card">
+                <button class="modal-close" id="closeLoginModal" aria-label="Close login modal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+                
+                <div class="login-header">
+                    <div class="login-logo">
+                        <svg viewBox="0 0 40 40" fill="none">
+                            <rect width="40" height="40" rx="8" fill="url(#logoGradient)"/>
+                            <path d="M10 27V13h4v10h8v4H10z" fill="#d4a853"/>
+                        </svg>
+                    </div>
+                    <h2 class="login-title" id="loginTitle">Welcome Back</h2>
+                    <p class="login-subtitle">Access your investment portal</p>
+                </div>
+                
+                <form class="login-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail" class="form-label">Email or Phone</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            <input type="text" id="loginEmail" name="email" class="form-input" placeholder="Enter your email or phone" required autocomplete="username">
+                        </div>
+                        <span class="form-error" id="emailError" role="alert"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword" class="form-label">Password</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0110 0v4"/>
+                            </svg>
+                            <input type="password" id="loginPassword" name="password" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+                            <button type="button" class="password-toggle" id="togglePassword" aria-label="Toggle password visibility">
+                                <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                                <svg class="eye-closed hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/>
+                                    <line x1="1" y1="1" x2="23" y2="23"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="form-error" id="passwordError" role="alert"></span>
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="remember" id="rememberMe">
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-label">Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-password" id="forgotPasswordLink">Forgot Password?</a>
+                    </div>
+                    
+                    <div class="form-error-banner hidden" id="loginErrorBanner" role="alert">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <span id="loginErrorMessage">Invalid credentials. Please try again.</span>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="loginSubmit">
+                        <span class="btn-text">Sign In</span>
+                        <span class="btn-loader hidden">
+                            <svg class="spinner" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                    </button>
+                </form>
+                
+                <div class="login-footer">
+                    <p>Don't have an account? <a href="#" id="signUpLink">Sign Up</a></p>
+                </div>
+                
+                <div class="login-security">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    <span>Secured with 256-bit SSL encryption</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal-overlay" id="forgotPasswordModal" role="dialog" aria-modal="true" aria-labelledby="forgotPasswordTitle" aria-hidden="true">
+        <div class="modal-backdrop"></div>
+        <div class="modal-container">
+            <div class="login-modal glass-card">
+                <button class="modal-close" id="closeForgotPasswordModal" aria-label="Close forgot password modal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+                
+                <div class="login-header">
+                    <div class="login-logo">
+                        <svg viewBox="0 0 40 40" fill="none">
+                            <rect width="40" height="40" rx="8" fill="url(#logoGradient)"/>
+                            <path d="M10 27V13h4v10h8v4H10z" fill="#d4a853"/>
+                        </svg>
+                    </div>
+                    <h2 class="login-title" id="forgotPasswordTitle">Reset Password</h2>
+                    <p class="login-subtitle">Enter your email to receive reset instructions</p>
+                </div>
+                
+                <form class="login-form" id="forgotPasswordForm">
+                    <div class="form-group">
+                        <label for="resetEmail" class="form-label">Email Address</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            <input type="email" id="resetEmail" name="email" class="form-input" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">
+                        Send Reset Link
+                    </button>
+                </form>
+                
+                <div class="login-footer">
+                    <p>Remember your password? <a href="#" id="backToLoginLink">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Password Modal (for email link) -->
+    <div class="modal-overlay" id="resetPasswordModal" role="dialog" aria-modal="true" aria-labelledby="resetPasswordTitle" aria-hidden="true">
+        <div class="modal-backdrop"></div>
+        <div class="modal-container">
+            <div class="login-modal glass-card">
+                <button class="modal-close" id="closeResetPasswordModal" aria-label="Close reset password modal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+                
+                <div class="login-header">
+                    <div class="login-logo">
+                        <svg viewBox="0 0 40 40" fill="none">
+                            <rect width="40" height="40" rx="8" fill="url(#logoGradient)"/>
+                            <path d="M10 27V13h4v10h8v4H10z" fill="#d4a853"/>
+                        </svg>
+                    </div>
+                    <h2 class="login-title" id="resetPasswordTitle">Create New Password</h2>
+                    <p class="login-subtitle">Enter your new password below</p>
+                </div>
+                
+                <form class="login-form" id="resetPasswordForm">
+                    <input type="hidden" id="resetToken" name="token">
+                    
+                    <div class="form-group">
+                        <label for="newPassword" class="form-label">New Password</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <input type="password" id="newPassword" name="password" class="form-input" placeholder="Enter new password (min 8 characters)" required minlength="8">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmNewPassword" class="form-label">Confirm New Password</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <input type="password" id="confirmNewPassword" name="confirm_password" class="form-input" placeholder="Confirm new password" required>
+                        </div>
+                        <span class="form-error" id="resetPasswordError" role="alert"></span>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">
+                        <span class="btn-text">Reset Password</span>
+                        <span class="btn-loader hidden">
+                            <svg class="spinner" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                    </button>
+                </form>
+                
+                <div class="login-footer">
+                    <p><a href="#" id="backToLoginFromReset">Back to Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div class="modal-overlay" id="signUpModal" role="dialog" aria-modal="true" aria-labelledby="signUpTitle" aria-hidden="true">
+        <div class="modal-backdrop"></div>
+        <div class="modal-container">
+            <div class="login-modal glass-card">
+                <button class="modal-close" id="closeSignUpModal" aria-label="Close sign up modal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+                
+                <div class="login-header">
+                    <div class="login-logo">
+                        <svg viewBox="0 0 40 40" fill="none">
+                            <rect width="40" height="40" rx="8" fill="url(#logoGradient)"/>
+                            <path d="M10 27V13h4v10h8v4H10z" fill="#d4a853"/>
+                        </svg>
+                    </div>
+                    <h2 class="login-title" id="signUpTitle">Create Account</h2>
+                    <p class="login-subtitle">Join Apex Capital for premier banking services</p>
+                </div>
+                
+                <form class="login-form" id="signUpForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="signUpFirstName" class="form-label">First Name</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                <input type="text" id="signUpFirstName" name="first_name" class="form-input" placeholder="First name" required>
+                            </div>
+                            <span class="form-error" id="firstNameError" role="alert"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="signUpLastName" class="form-label">Last Name</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                <input type="text" id="signUpLastName" name="last_name" class="form-input" placeholder="Last name" required>
+                            </div>
+                            <span class="form-error" id="lastNameError" role="alert"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signUpEmail" class="form-label">Email Address</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            <input type="email" id="signUpEmail" name="email" class="form-input" placeholder="Enter your email" required>
+                        </div>
+                        <span class="form-error" id="signUpEmailError" role="alert"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signUpPhone" class="form-label">Phone Number (Optional)</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            <input type="tel" id="signUpPhone" name="phone" class="form-input" placeholder="Enter your phone number">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signUpPassword" class="form-label">Password</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <input type="password" id="signUpPassword" name="password" class="form-input" placeholder="Create a password (min 8 characters)" required minlength="8">
+                            <button type="button" class="password-toggle" id="toggleSignUpPassword" aria-label="Toggle password visibility">
+                                <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                                <svg class="eye-closed hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/>
+                                    <line x1="1" y1="1" x2="23" y2="23"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="form-error" id="signUpPasswordError" role="alert"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signUpConfirmPassword" class="form-label">Confirm Password</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <input type="password" id="signUpConfirmPassword" name="confirm_password" class="form-input" placeholder="Confirm your password" required>
+                        </div>
+                        <span class="form-error" id="confirmPasswordError" role="alert"></span>
+                    </div>
+                    
+                    <div class="form-error-banner hidden" id="signUpErrorBanner" role="alert">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <span id="signUpErrorMessage">Registration failed. Please try again.</span>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="signUpSubmit">
+                        <span class="btn-text">Create Account</span>
+                        <span class="btn-loader hidden">
+                            <svg class="spinner" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                    </button>
+                </form>
+                
+                <div class="login-footer">
+                    <p>Already have an account? <a href="#" id="backToLoginFromSignUp">Sign In</a></p>
+                </div>
+                
+                <div class="login-security">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    <span>Secured with 256-bit SSL encryption</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/api.js"></script>
+    <script src="/js/landing.js"></script>
+</body>
+</html>

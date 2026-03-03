@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documents - Apex Capital</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+  <!-- Navigation -->
+  <nav class="bg-gray-800 border-b border-gray-700">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center space-x-8">
+          <a href="dashboard.html" class="text-2xl font-bold text-blue-400">Apex Capital</a>
+          <div class="hidden md:flex space-x-4">
+            <a href="dashboard.html" class="text-gray-300 hover:text-white px-3 py-2">Dashboard</a>
+            <a href="transfers.html" class="text-gray-300 hover:text-white px-3 py-2">Transfers</a>
+            <a href="trading.html" class="text-gray-300 hover:text-white px-3 py-2">Trading</a>
+            <a href="bill-pay.html" class="text-gray-300 hover:text-white px-3 py-2">Bill Pay</a>
+            <a href="documents.html" class="text-blue-400 border-b-2 border-blue-400 px-3 py-2">Documents</a>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <span id="userBalance" class="text-gray-300"></span>
+          <a href="settings.html" class="text-gray-400 hover:text-white" title="Settings"><i class="fas fa-cog"></i></a>
+          <button onclick="logout()" class="text-gray-400 hover:text-white" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-7xl mx-auto px-4 py-6">
+    <div class="mb-6">
+      <h1 class="text-2xl font-bold">Documents</h1>
+      <p class="text-gray-400">Access your statements, tax documents, and other important files</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <!-- Sidebar -->
+      <div class="lg:col-span-1">
+        <div class="bg-gray-800 rounded-lg p-4">
+          <h3 class="font-semibold mb-4">Categories</h3>
+          <nav class="space-y-2">
+            <button onclick="filterDocuments('all')" class="w-full text-left px-3 py-2 rounded-lg bg-blue-600 text-white" id="filter-all">
+              <i class="fas fa-folder mr-2"></i>All Documents
+            </button>
+            <button onclick="filterDocuments('statements')" class="w-full text-left px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-700" id="filter-statements">
+              <i class="fas fa-file-alt mr-2"></i>Statements
+            </button>
+            <button onclick="filterDocuments('tax')" class="w-full text-left px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-700" id="filter-tax">
+              <i class="fas fa-file-invoice-dollar mr-2"></i>Tax Documents
+            </button>
+            <button onclick="filterDocuments('trade')" class="w-full text-left px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-700" id="filter-trade">
+              <i class="fas fa-chart-line mr-2"></i>Trade Confirmations
+            </button>
+            <button onclick="filterDocuments('legal')" class="w-full text-left px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-700" id="filter-legal">
+              <i class="fas fa-gavel mr-2"></i>Legal Documents
+            </button>
+          </nav>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg p-4 mt-4">
+          <h3 class="font-semibold mb-4">Quick Actions</h3>
+          <div class="space-y-2">
+            <button onclick="uploadDocument()" class="w-full text-left px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-700">
+              <i class="fas fa-upload mr-2"></i>Upload Document
+            </button>
+            <button onclick="requestStatement()" class="w-full text-left px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-700">
+              <i class="fas fa-file-download mr-2"></i>Request Statement
+            </button>
+            <button onclick="downloadAll()" class="w-full text-left px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-700">
+              <i class="fas fa-download mr-2"></i>Download All
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="lg:col-span-3 space-y-6">
+        <!-- Search and Filter -->
+        <div class="bg-gray-800 rounded-lg p-4">
+          <div class="flex flex-col md:flex-row gap-4">
+            <div class="flex-1 relative">
+              <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+              <input type="text" id="searchDocuments" placeholder="Search documents..." class="w-full bg-gray-700 border border-gray-600 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:border-blue-500" aria-label="Search documents">
+            </div>
+            <select id="dateFilter" class="bg-gray-700 border border-gray-600 rounded-lg px-4 py-2" aria-label="Date filter" onchange="applyFilters()">
+              <option value="all">All Dates</option>
+              <option value="30">Last 30 Days</option>
+              <option value="90">Last 90 Days</option>
+              <option value="365">Last Year</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Recent Documents -->
+        <div class="bg-gray-800 rounded-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">Recent Documents</h3>
+          <div id="documentsList" class="space-y-3">
+            <p class="text-gray-500 text-sm">Loading documents...</p>
+          </div>
+        </div>
+
+        <!-- Statements Section -->
+        <div class="bg-gray-800 rounded-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">Monthly Statements</h3>
+          <div id="statementsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Statements will be populated here -->
+          </div>
+        </div>
+
+        <!-- Tax Documents Section -->
+        <div class="bg-gray-800 rounded-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">Tax Documents</h3>
+          <div id="taxDocumentsList" class="space-y-3">
+            <p class="text-gray-500 text-sm">No tax documents available</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload Modal -->
+  <div id="uploadModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
+      <h3 class="text-xl font-semibold mb-4">Upload Document</h3>
+      <form id="uploadForm" onsubmit="submitUpload(event)">
+        <div class="mb-4">
+          <label class="block text-sm text-gray-400 mb-1">Document Type</label>
+          <select id="uploadType" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2" aria-label="Document type">
+            <option value="statement">Statement</option>
+            <option value="tax">Tax Document</option>
+            <option value="id">ID Document</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label for="uploadFile" class="block text-sm text-gray-400 mb-1">File</label>
+          <input type="file" id="uploadFile" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2" accept=".pdf,.jpg,.jpeg,.png" required>
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm text-gray-400 mb-1">Description (Optional)</label>
+          <input type="text" id="uploadDescription" placeholder="Add a description" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2">
+        </div>
+        <div class="flex space-x-4">
+          <button type="button" onclick="closeUploadModal()" class="flex-1 py-2 rounded-lg bg-gray-700 hover:bg-gray-600">Cancel</button>
+          <button type="submit" class="flex-1 py-2 rounded-lg bg-blue-600 hover:bg-blue-700">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Document Preview Modal -->
+  <div id="previewModal" class="fixed inset-0 bg-black bg-opacity-75 hidden items-center justify-center z-50">
+    <div class="bg-gray-800 rounded-lg p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-auto">
+      <div class="flex justify-between items-center mb-4">
+        <h3 id="previewTitle" class="text-xl font-semibold">Document Preview</h3>
+        <button type="button" onclick="closePreviewModal()" class="text-gray-400 hover:text-white" title="Close preview" aria-label="Close preview">
+          <i class="fas fa-times text-xl" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div id="previewContent" class="bg-gray-900 rounded-lg p-4 min-h-[400px]">
+        <!-- Preview content will be shown here -->
+      </div>
+      <div class="mt-4 flex justify-end space-x-4">
+        <button onclick="downloadCurrentDocument()" class="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600">
+          <i class="fas fa-download mr-2"></i>Download
+        </button>
+        <button onclick="printDocument()" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700">
+          <i class="fas fa-print mr-2"></i>Print
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-4 right-4 bg-gray-800 border border-gray-700 rounded-lg p-4 hidden">
+    <div class="flex items-center space-x-3">
+      <i id="toastIcon" class="fas fa-check-circle text-green-500"></i>
+      <span id="toastMessage"></span>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/documents.js"></script>
+</body>
+</html>

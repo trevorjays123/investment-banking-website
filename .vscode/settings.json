@@ -1,0 +1,42 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "tailwindCSS.experimental.classRegex": [
+    ["class\\s*=\\s*[\"']([^\"']*)[\"']", "([^\"'\\s]*)"]
+  ],
+  "files.associations": {
+    "*.html": "html",
+    "*.js": "javascript",
+    "*.sql": "mysql"
+  },
+  "html.validate.scripts": false,
+  "html.validate.styles": false,
+  "css.validate": true,
+  "javascript.validate.enable": true,
+  "sql.validate.enable": false,
+  "sqltools.useNodeRuntime": true,
+  "sqlfluff.dialect": "mysql",
+  "sqlfluff.enabled": false,
+  "[sql]": {
+    "editor.wordSeparators": "`~@#%^&*()-=+[{]}\\|;:'\",.<>/?",
+    "editor.defaultFormatter": null
+  },
+  "[mysql]": {
+    "editor.wordSeparators": "`~@#%^&*()-=+[{]}\\|;:'\",.<>/?"
+  },
+  "mssql.intelliSense.enableIntelliSense": false,
+  "mssql.validateLanguage": false,
+  "database.windowsAzureDB.database": "online_banking",
+  "json.validate.enable": true,
+  "javascript.suggestionActions.enabled": true,
+  "typescript.tsserver.useSeparateSyntaxServer": false,
+  "errors.exclude": {
+    "**/*.sql": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/package-lock.json": true
+  }
+}

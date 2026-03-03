@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bill Pay - Apex Capital</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+  <!-- Navigation -->
+  <nav class="bg-gray-800 border-b border-gray-700">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center space-x-8">
+          <a href="dashboard.html" class="text-2xl font-bold text-blue-400">Apex Capital</a>
+          <div class="hidden md:flex space-x-4">
+            <a href="dashboard.html" class="text-gray-300 hover:text-white px-3 py-2">Dashboard</a>
+            <a href="transfers.html" class="text-gray-300 hover:text-white px-3 py-2">Transfers</a>
+            <a href="trading.html" class="text-gray-300 hover:text-white px-3 py-2">Trading</a>
+            <a href="bill-pay.html" class="text-blue-400 border-b-2 border-blue-400 px-3 py-2">Bill Pay</a>
+            <a href="documents.html" class="text-gray-300 hover:text-white px-3 py-2">Documents</a>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <span id="userBalance" class="text-gray-300"></span>
+          <a href="settings.html" class="text-gray-400 hover:text-white" title="Settings"><i class="fas fa-cog"></i></a>
+          <button onclick="logout()" class="text-gray-400 hover:text-white" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-7xl mx-auto px-4 py-6">
+    <div class="mb-6">
+      <h1 class="text-2xl font-bold">Bill Pay</h1>
+      <p class="text-gray-400">Manage and pay your bills</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Left Column: Bill Payment -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <button onclick="showAddBillModal()" class="bg-gray-800 rounded-lg p-4 hover:bg-gray-700 transition text-center">
+            <i class="fas fa-plus-circle text-2xl text-blue-400 mb-2"></i>
+            <div class="text-sm">Add Biller</div>
+          </button>
+          <button onclick="showPaymentHistory()" class="bg-gray-800 rounded-lg p-4 hover:bg-gray-700 transition text-center">
+            <i class="fas fa-history text-2xl text-green-400 mb-2"></i>
+            <div class="text-sm">History</div>
+          </button>
+          <button onclick="showScheduledPayments()" class="bg-gray-800 rounded-lg p-4 hover:bg-gray-700 transition text-center">
+            <i class="fas fa-calendar-alt text-2xl text-yellow-400 mb-2"></i>
+            <div class="text-sm">Scheduled</div>
+          </button>
+          <button onclick="showRecurringPayments()" class="bg-gray-800 rounded-lg p-4 hover:bg-gray-700 transition text-center">
+            <i class="fas fa-redo text-2xl text-purple-400 mb-2"></i>
+            <div class="text-sm">Recurring</div>
+          </button>
+        </div>
+
+        <!-- Pay Bill Form -->
+        <div class="bg-gray-800 rounded-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">Pay a Bill</h3>
+          
+          <form id="payBillForm" onsubmit="submitPayment(event)">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label class="block text-sm text-gray-400 mb-1">From Account</label>
+                <select id="paymentAccount" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500" aria-label="Payment Account" required>
+                  <option value="">Select account</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm text-gray-400 mb-1">Biller</label>
+                <select id="paymentBiller" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500" aria-label="Biller" required>
+                  <option value="">Select biller</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label class="block text-sm text-gray-400 mb-1">Amount</label>
+                <div class="relative">
+                  <span class="absolute left-3 top-2 text-gray-400">$</span>
+                  <input type="number" id="paymentAmount" step="0.01" min="0.01" placeholder="0.00" class="w-full bg-gray-700 border border-gray-600 rounded-lg pl-8 pr-4 py-2 focus:outline-none focus:border-blue-500" required>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm text-gray-400 mb-1">Payment Date</label>
+                <input type="date" id="paymentDate" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500" aria-label="Payment Date" required>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-sm text-gray-400 mb-1">Account Number</label>
+              <input type="text" id="paymentAccountNumber" placeholder="Your account number with biller" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500">
+            </div>
+
+            <div class="mb-6">
+              <label class="block text-sm text-gray-400 mb-1">Memo (Optional)</label>
+              <input type="text" id="paymentMemo" placeholder="Add a note" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500">
+            </div>
+
+            <div class="flex items-center space-x-4">
+              <button type="submit" class="flex-1 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold">
+                Pay Now
+              </button>
+              <button type="button" onclick="schedulePayment()" class="flex-1 py-3 rounded-lg bg-gray-700 hover:bg-gray-600 text-white font-semibold">
+                Schedule Payment
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Upcoming Bills -->
+        <div class="bg-gray-800 rounded-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">Upcoming Bills</h3>
+          <div id="upcomingBills" class="space-y-3">
+            <p class="text-gray-500 text-sm">No upcoming bills</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Billers & Summary -->
+      <div class="space-y-6">
+        <!-- Account Summary -->
+        <div class="bg-gray-800 rounded-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">Payment Summary</h3>
+          <div class="space-y-3">
+            <div class="flex justify-between">
+              <span class="text-gray-400">Bills Due (30 days)</span>
+              <span id="billsDueCount">0</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-400">Total Amount Due</span>
+              <span id="totalAmountDue">$0.00</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-400">Scheduled Payments</span>
+              <span id="scheduledCount">0</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-400">Recurring Payments</span>
+              <span id="recurringCount">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Saved Billers -->
+        <div class="bg-gray-800 rounded-lg p-6">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold">Saved Billers</h3>
+            <button onclick="showAddBillModal()" class="text-blue-400 hover:text-blue-300 text-sm">
+              <i class="fas fa-plus mr-1"></i>Add
+            </button>
+          </div>
+          <div id="savedBillers" class="space-y-3">
+            <p class="text-gray-500 text-sm">No saved billers</p>
+          </div>
+        </div>
+
+        <!-- Recent Payments -->
+        <div class="bg-gray-800 rounded-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">Recent Payments</h3>
+          <div id="recentPayments" class="space-y-3">
+            <p class="text-gray-500 text-sm">No recent payments</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Biller Modal -->
+  <div id="addBillerModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
+      <h3 class="text-xl font-semibold mb-4">Add Biller</h3>
+      <form id="addBillerForm" onsubmit="submitAddBiller(event)">
+        <div class="mb-4">
+          <label class="block text-sm text-gray-400 mb-1">Biller Name</label>
+          <input type="text" id="billerName" placeholder="e.g., Electric Company" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm text-gray-400 mb-1">Category</label>
+          <select id="billerCategory" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2" aria-label="Biller Category">
+            <option value="utilities">Utilities</option>
+            <option value="insurance">Insurance</option>
+            <option value="telecom">Telecommunications</option>
+            <option value="credit_card">Credit Card</option>
+            <option value="mortgage">Mortgage</option>
+            <option value="rent">Rent</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm text-gray-400 mb-1">Account Number</label>
+          <input type="text" id="billerAccountNumber" placeholder="Your account number" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2">
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm text-gray-400 mb-1">Nickname (Optional)</label>
+          <input type="text" id="billerNickname" placeholder="e.g., Home Electric" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2">
+        </div>
+        <div class="flex space-x-4">
+          <button type="button" onclick="closeAddBillerModal()" class="flex-1 py-2 rounded-lg bg-gray-700 hover:bg-gray-600">Cancel</button>
+          <button type="submit" class="flex-1 py-2 rounded-lg bg-blue-600 hover:bg-blue-700">Add Biller</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-4 right-4 bg-gray-800 border border-gray-700 rounded-lg p-4 hidden">
+    <div class="flex items-center space-x-3">
+      <i id="toastIcon" class="fas fa-check-circle text-green-500"></i>
+      <span id="toastMessage"></span>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/bill-pay.js"></script>
+</body>
+</html>

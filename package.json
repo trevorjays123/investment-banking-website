@@ -1,0 +1,40 @@
+{
+  "name": "online-banking-website",
+  "version": "1.0.0",
+  "description": "Complete Online Banking Website with Node.js, MySQL, and TailwindCSS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build:css": "npx tailwindcss -i ./src/input.css -o ./public/css/styles.css --minify",
+    "build:css:watch": "npx tailwindcss -i ./src/input.css -o ./public/css/styles.css --watch",
+    "db:setup": "node database/setup.js",
+    "db:seed": "node database/seed.js"
+  },
+  "keywords": [
+    "banking",
+    "online-banking",
+    "nodejs",
+    "mysql",
+    "express"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.6.5",
+    "nodemailer": "^6.9.7",
+    "sequelize": "^6.35.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}
