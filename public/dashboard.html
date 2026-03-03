@@ -3,47 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Primary Meta Tags -->
     <title>Dashboard | Apex Capital - Investment Banking</title>
-    <meta name="title" content="Dashboard | Apex Capital - Investment Banking">
-    <meta name="description" content="Manage your investments, view account balances, and track transactions with Apex Capital's secure online banking dashboard.">
-    <meta name="keywords" content="investment banking, online banking, financial services, wealth management, apex capital">
-    <meta name="author" content="Apex Capital">
-    <meta name="robots" content="noindex, nofollow">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://apexcapital.com/dashboard">
-    <meta property="og:title" content="Dashboard | Apex Capital - Investment Banking">
-    <meta property="og:description" content="Manage your investments, view account balances, and track transactions with Apex Capital's secure online banking dashboard.">
-    <meta property="og:image" content="https://apexcapital.com/images/og-dashboard.png">
-    <meta property="og:site_name" content="Apex Capital">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://apexcapital.com/dashboard">
-    <meta property="twitter:title" content="Dashboard | Apex Capital - Investment Banking">
-    <meta property="twitter:description" content="Manage your investments, view account balances, and track transactions with Apex Capital's secure online banking dashboard.">
-    <meta property="twitter:image" content="https://apexcapital.com/images/twitter-dashboard.png">
-    
-    <!-- Security Headers -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    
-    <!-- Theme Color - Progressive enhancement for supported browsers -->
-    <!-- Browser Support: Chrome 39+, Safari 15+, Edge 17+, Android WebView -->
-    <!-- Limited/No Support: Firefox, Opera - these browsers safely ignore this tag -->
-    <!-- Note: Edge Tools warning about Firefox/Opera support is expected and can be safely ignored -->
-    <!-- This is intentional progressive enhancement - not a bug -->
+    <meta name="description" content="Manage your investments, view account balances, and track transactions.">
     <meta name="theme-color" content="#0a192f">
-    <!-- MS Applications (Windows tiles) -->
-    <meta name="msapplication-TileColor" content="#0a192f">
-    <meta name="msapplication-navbutton-color" content="#0a192f">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%230a192f' width='32' height='32' rx='4'/%3E%3Cpath fill='%23d4a853' d='M8 22V10h3v9h6v3H8z'/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,33 +22,12 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            200: '#bfdbfe',
-                            300: '#93c5fd',
-                            400: '#60a5fa',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                            900: '#1e3a8a'
-                        },
-                        dark: {
-                            900: '#0a192f',
-                            800: '#112240',
-                            700: '#1a3a52',
-                            600: '#234567'
-                        },
-                        accent: {
-                            gold: '#d4a853',
-                            goldLight: '#f0c674'
-                        }
+                        dark: { 900: '#0a192f', 800: '#112240', 700: '#1a3a52', 600: '#234567' },
+                        accent: { gold: '#d4a853', goldLight: '#f0c674' }
                     },
                     fontFamily: {
                         sans: ['Inter', 'system-ui', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                        mono: ['ui-monospace', 'monospace']
+                        serif: ['Playfair Display', 'serif']
                     }
                 }
             }
@@ -93,183 +37,86 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Chart.js for graphs -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <!-- Custom Styles -->
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/polish.css">
     
-    <!-- Component Styles -->
     <style>
-        /* Loading Spinner */
-        .loading-overlay {
+        /* Dropdown Styles */
+        .dropdown { position: relative; }
+        .dropdown-menu {
             position: absolute;
-            inset: 0;
-            background: rgba(10, 25, 47, 0.9);
+            right: 0;
+            top: 100%;
+            margin-top: 8px;
+            min-width: 280px;
+            background: #112240;
+            border: 1px solid #374151;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+        }
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        /* Notification Styles */
+        .notification-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #374151;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .notification-item:hover { background: rgba(255,255,255,0.05); }
+        .notification-item:last-child { border-bottom: none; }
+        .notification-item.unread { background: rgba(59, 130, 246, 0.1); }
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            min-width: 18px;
+            height: 18px;
+            background: #ef4444;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 10;
-        }
-        
-        .loading-spinner {
-            text-align: center;
-        }
-        
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(59, 130, 246, 0.2);
-            border-top-color: #3b82f6;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-        
-        .loading-message {
-            color: #9ca3af;
-            font-size: 0.875rem;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        /* Button Loading State */
-        .btn-loading {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-        
-        .btn-spinner {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-right: 8px;
+            color: white;
+            padding: 0 4px;
         }
         
         /* Animations */
-        .animate-slide-in {
-            animation: slideIn 0.3s ease-out;
-        }
-        
-        .animate-slide-out {
-            animation: slideOut 0.3s ease-out forwards;
-        }
-        
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes slideOut {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
-        
-        /* Modal Animations */
-        .modal-overlay {
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-        
-        .modal-overlay.modal-visible {
-            opacity: 1;
-        }
-        
-        .modal-content {
-            transform: scale(0.95);
-            transition: transform 0.2s ease;
-        }
-        
-        .modal-visible .modal-content {
-            transform: scale(1);
-        }
-        
-        /* Card Hover Effects */
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Pulse Animation for Live Updates */
-        .pulse-live {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-        }
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
         /* Sidebar */
-        .sidebar {
-            transition: transform 0.3s ease;
-        }
-        
+        .sidebar { transition: transform 0.3s ease; }
         @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                position: fixed;
-                z-index: 40;
-            }
-            
-            .sidebar.open {
-                transform: translateX(0);
-            }
+            .sidebar { transform: translateX(-100%); position: fixed; z-index: 40; }
+            .sidebar.open { transform: translateX(0); }
         }
         
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #112240; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
         
-        ::-webkit-scrollbar-track {
-            background: #112240;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #374151;
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #4b5563;
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.3s ease-in;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        /* Card Hover */
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
     </style>
 </head>
 <body class="bg-dark-900 text-white min-h-screen">
-    <!-- Skip Link for Accessibility -->
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-lg z-50">
         Skip to main content
     </a>
@@ -281,7 +128,7 @@
                 <!-- Logo -->
                 <div class="p-6 border-b border-gray-700">
                     <a href="/" class="flex items-center gap-3">
-                        <svg viewBox="0 0 40 40" fill="none" class="w-10 h-10" aria-hidden="true">
+                        <svg viewBox="0 0 40 40" fill="none" class="w-10 h-10">
                             <rect width="40" height="40" rx="8" fill="#0a192f"/>
                             <path d="M10 27V13h4v10h8v4H10z" fill="#d4a853"/>
                         </svg>
@@ -293,57 +140,49 @@
                 <nav class="p-4" aria-label="Main navigation">
                     <ul class="space-y-1">
                         <li>
-                            <a href="#dashboard" onclick="showSection('dashboard'); return false;" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-white bg-blue-600 bg-opacity-20 border-l-2 border-blue-500" data-section="dashboard" aria-current="page">
-                                <i class="fas fa-th-large w-5 text-center" aria-hidden="true"></i>
+                            <a href="/dashboard.html" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-white bg-blue-600 bg-opacity-20 border-l-2 border-blue-500">
+                                <i class="fas fa-th-large w-5 text-center"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#accounts" onclick="showSection('accounts'); return false;" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" data-section="accounts">
-                                <i class="fas fa-wallet w-5 text-center" aria-hidden="true"></i>
-                                <span>Accounts</span>
+                            <a href="/transfers.html" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-exchange-alt w-5 text-center"></i>
+                                <span>Transfers</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#transactions" onclick="showSection('transactions'); return false;" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" data-section="transactions">
-                                <i class="fas fa-exchange-alt w-5 text-center" aria-hidden="true"></i>
-                                <span>Transactions</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#transfer" onclick="showSection('transfer'); return false;" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" data-section="transfer">
-                                <i class="fas fa-paper-plane w-5 text-center" aria-hidden="true"></i>
-                                <span>Transfer</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#bills" onclick="showSection('bills'); return false;" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" data-section="bills">
-                                <i class="fas fa-file-invoice-dollar w-5 text-center" aria-hidden="true"></i>
+                            <a href="/bill-pay.html" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-file-invoice-dollar w-5 text-center"></i>
                                 <span>Bill Pay</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#cards" onclick="showSection('cards'); return false;" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" data-section="cards">
-                                <i class="fas fa-credit-card w-5 text-center" aria-hidden="true"></i>
-                                <span>Cards</span>
+                            <a href="/trading.html" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-chart-line w-5 text-center"></i>
+                                <span>Trading</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/documents.html" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-file-alt w-5 text-center"></i>
+                                <span>Documents</span>
                             </a>
                         </li>
                     </ul>
                     
-                    <!-- Divider -->
                     <hr class="my-4 border-gray-700">
                     
-                    <!-- Secondary Navigation -->
                     <ul class="space-y-1">
                         <li>
-                            <a href="#settings" onclick="showSection('settings'); return false;" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors" data-section="settings">
-                                <i class="fas fa-cog w-5 text-center" aria-hidden="true"></i>
+                            <a href="/settings.html" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-cog w-5 text-center"></i>
                                 <span>Settings</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#help" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
-                                <i class="fas fa-question-circle w-5 text-center" aria-hidden="true"></i>
+                            <a href="#" id="helpLink" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-question-circle w-5 text-center"></i>
                                 <span>Help & Support</span>
                             </a>
                         </li>
@@ -358,52 +197,72 @@
             <header class="bg-dark-800 border-b border-gray-700 sticky top-0 z-30">
                 <div class="flex items-center justify-between px-6 py-4">
                     <!-- Mobile Menu Toggle -->
-                    <button class="md:hidden text-gray-400 hover:text-white" onclick="toggleSidebar()" aria-label="Toggle menu">
+                    <button class="md:hidden text-gray-400 hover:text-white" id="mobileMenuBtn" aria-label="Toggle menu">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                     
                     <!-- Page Title -->
                     <div class="hidden md:block">
-                        <h1 class="text-xl font-semibold" id="page-title">Dashboard</h1>
-                        <p class="text-sm text-gray-400" id="page-subtitle">Welcome back to your dashboard</p>
+                        <h1 class="text-xl font-semibold">Dashboard</h1>
+                        <p class="text-sm text-gray-400" id="welcome-text">Welcome back</p>
                     </div>
                     
                     <!-- Search -->
                     <div class="hidden lg:block flex-1 max-w-md mx-8">
                         <div class="relative">
-                            <input type="search" placeholder="Search transactions, accounts..." class="w-full bg-dark-700 border border-gray-600 rounded-lg px-4 py-2 pl-10 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500" aria-label="Search">
-                            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+                            <input type="search" placeholder="Search transactions, accounts..." class="w-full bg-dark-700 border border-gray-600 rounded-lg px-4 py-2 pl-10 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500">
+                            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                         </div>
                     </div>
                     
                     <!-- Header Actions -->
                     <div class="flex items-center gap-4">
-                        <!-- Notifications -->
-                        <button class="relative text-gray-400 hover:text-white transition-colors" aria-label="View notifications">
-                            <i class="fas fa-bell text-xl"></i>
-                            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs flex items-center justify-center text-white">3</span>
-                        </button>
-                        
-                        <!-- User Menu -->
-                        <div class="flex items-center gap-3">
-                            <div class="hidden sm:block text-right">
-                                <p class="text-sm font-medium text-white" id="userName">Loading...</p>
-                                <p class="text-xs text-gray-400" id="userEmail"></p>
+                        <!-- Notifications Dropdown -->
+                        <div class="dropdown" id="notificationsDropdown">
+                            <button class="relative text-gray-400 hover:text-white transition-colors p-2" id="notificationsBtn" aria-label="View notifications">
+                                <i class="fas fa-bell text-xl"></i>
+                                <span class="notification-badge hidden" id="notificationBadge">0</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" id="notificationsMenu">
+                                <div class="p-4 border-b border-gray-700">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="font-semibold text-white">Notifications</h3>
+                                        <button class="text-xs text-blue-400 hover:underline" id="markAllReadBtn">Mark all read</button>
+                                    </div>
+                                </div>
+                                <div class="max-h-80 overflow-y-auto" id="notificationsList">
+                                    <div class="p-4 text-center text-gray-400">No notifications</div>
+                                </div>
+                                <div class="p-3 border-t border-gray-700">
+                                    <a href="#" class="block text-center text-sm text-blue-400 hover:underline" id="viewAllNotifications">View all notifications</a>
+                                </div>
                             </div>
-                            <div class="relative">
-                                <button class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium" aria-label="User menu" id="userMenuBtn">
+                        </div>
+                        
+                        <!-- User Menu Dropdown -->
+                        <div class="dropdown" id="userDropdownContainer">
+                            <div class="flex items-center gap-3 cursor-pointer" id="userMenuBtn">
+                                <div class="hidden sm:block text-right">
+                                    <p class="text-sm font-medium text-white" id="userName">Loading...</p>
+                                    <p class="text-xs text-gray-400" id="userEmail"></p>
+                                </div>
+                                <button class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium" aria-label="User menu">
                                     <span id="userInitials">U</span>
                                 </button>
-                                <!-- Dropdown Menu -->
-                                <div class="hidden absolute right-0 mt-2 w-48 bg-dark-700 rounded-lg shadow-lg border border-gray-600 py-1 z-50" id="userDropdown">
-                                    <a href="#settings" onclick="showSection('settings'); return false;" class="block px-4 py-2 text-gray-300 hover:bg-gray-600 hover:text-white">
+                            </div>
+                            <div class="dropdown-menu dropdown-menu-right" id="userMenu">
+                                <div class="py-2">
+                                    <a href="/settings.html" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white">
                                         <i class="fas fa-user mr-2"></i>Profile
                                     </a>
-                                    <a href="#settings" onclick="showSection('settings'); return false;" class="block px-4 py-2 text-gray-300 hover:bg-gray-600 hover:text-white">
-                                        <i class="fas fa-cog mr-2"></i>Settings
+                                    <a href="/settings.html#security" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white">
+                                        <i class="fas fa-shield-alt mr-2"></i>Security
                                     </a>
-                                    <hr class="my-1 border-gray-600">
-                                    <button onclick="logout()" class="w-full text-left px-4 py-2 text-red-400 hover:bg-gray-600 hover:text-red-300">
+                                    <a href="/settings.html#preferences" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white">
+                                        <i class="fas fa-cog mr-2"></i>Preferences
+                                    </a>
+                                    <hr class="my-2 border-gray-700">
+                                    <button id="logoutBtn" class="w-full text-left px-4 py-2 text-red-400 hover:bg-gray-700 hover:text-red-300">
                                         <i class="fas fa-sign-out-alt mr-2"></i>Logout
                                     </button>
                                 </div>
@@ -415,40 +274,98 @@
 
             <!-- Main Content -->
             <main id="main-content" class="flex-1 p-6 overflow-y-auto" role="main">
-                <!-- Content will be rendered by JavaScript -->
+                <!-- Quick Actions -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <button onclick="showTransferModal()" class="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Transfer</span>
+                    </button>
+                    <button onclick="showDepositModal()" class="bg-green-600 hover:bg-green-700 text-white p-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                        <i class="fas fa-plus"></i>
+                        <span>Deposit</span>
+                    </button>
+                    <a href="/bill-pay.html" class="bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <span>Pay Bills</span>
+                    </a>
+                    <a href="/documents.html" class="bg-gray-600 hover:bg-gray-700 text-white p-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Statements</span>
+                    </a>
+                </div>
+
+                <!-- Total Balance -->
+                <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg shadow-lg p-6 mb-8 text-white">
+                    <p class="text-blue-100 mb-1">Total Balance</p>
+                    <p class="text-4xl font-bold" id="total-balance">$0.00</p>
+                </div>
+
+                <!-- Accounts Summary -->
+                <h2 class="text-2xl font-bold mb-4 text-white">Your Accounts</h2>
+                <div id="accounts-summary" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-dark-700 rounded-lg p-6 text-center">
+                        <p class="text-gray-400">Loading accounts...</p>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <h2 class="text-2xl font-bold mb-4 text-white">Recent Transactions</h2>
+                <div class="bg-dark-700 rounded-lg shadow p-6">
+                    <div id="recent-transactions">
+                        <p class="text-gray-400">Loading transactions...</p>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
 
     <!-- Toast Container -->
-    <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2" aria-live="polite" aria-atomic="true"></div>
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"></div>
     
     <!-- Modal Container -->
-    <div id="modal-container" aria-hidden="true"></div>
+    <div id="modal-container"></div>
     
-    <!-- Offline Indicator -->
-    <div id="offline-indicator" class="hidden fixed bottom-4 left-4 bg-yellow-600 text-white px-4 py-2 rounded-lg shadow-lg z-50">
-        <i class="fas fa-wifi mr-2"></i>
-        <span>You're offline. Some features may be unavailable.</span>
+    <!-- Help Modal -->
+    <div id="help-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-dark-800 rounded-lg p-6 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-white">Help & Support</h3>
+                <button onclick="closeHelpModal()" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <a href="mailto:support@apexcapital.com" class="block p-4 bg-dark-700 rounded-lg hover:bg-dark-600 transition-colors">
+                    <i class="fas fa-envelope text-blue-400 mr-3"></i>
+                    <span class="text-white">support@apexcapital.com</span>
+                </a>
+                <a href="tel:+12125550100" class="block p-4 bg-dark-700 rounded-lg hover:bg-dark-600 transition-colors">
+                    <i class="fas fa-phone text-green-400 mr-3"></i>
+                    <span class="text-white">+1 (212) 555-0100</span>
+                </a>
+                <div class="p-4 bg-dark-700 rounded-lg">
+                    <i class="fas fa-clock text-yellow-400 mr-3"></i>
+                    <span class="text-white">24/7 Support Available</span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Scripts -->
-    <script src="/js/utils.js"></script>
-    <script src="/js/api.service.js"></script>
-    <script src="/js/validation.js"></script>
-    <script src="/js/components.js"></script>
     <script src="/js/api.js"></script>
-    <script src="/js/auth.js"></script>
-    <script src="/js/dashboard.js"></script>
-    <script src="/js/ui-polish.js"></script>
-    <script src="/js/app.js"></script>
     
     <script>
         // Global variables
         let userAccounts = [];
+        let notifications = [];
         
-        // Check authentication on page load
-        (function() {
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Dashboard initializing...');
+            
+            // Check authentication
             const token = localStorage.getItem('token');
             if (!token) {
                 window.location.href = '/';
@@ -456,367 +373,330 @@
             }
             
             // Load user info
+            loadUserInfo();
+            
+            // Load dashboard data
+            loadDashboardData();
+            
+            // Setup dropdowns
+            setupDropdowns();
+            
+            // Setup mobile menu
+            setupMobileMenu();
+            
+            // Load notifications
+            loadNotifications();
+            
+            // Setup help link
+            setupHelpLink();
+            
+            // Setup logout
+            setupLogout();
+        });
+        
+        // ============================================
+        // USER INFO
+        // ============================================
+        function loadUserInfo() {
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             const userName = (user.first_name || '') + ' ' + (user.last_name || '');
             document.getElementById('userName').textContent = userName.trim() || 'User';
             document.getElementById('userEmail').textContent = user.email || '';
             document.getElementById('userInitials').textContent = (user.first_name?.[0] || 'U') + (user.last_name?.[0] || '');
+            document.getElementById('welcome-text').textContent = 'Welcome back, ' + (user.first_name || 'User');
+        }
+        
+        // ============================================
+        // DROPDOWNS
+        // ============================================
+        function setupDropdowns() {
+            // Notifications dropdown
+            const notificationsBtn = document.getElementById('notificationsBtn');
+            const notificationsMenu = document.getElementById('notificationsMenu');
             
-            // Initialize API Service
-            if (typeof ApiService !== 'undefined') {
-                ApiService.init();
+            if (notificationsBtn && notificationsMenu) {
+                notificationsBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    console.log('Notifications button clicked');
+                    closeAllDropdowns();
+                    notificationsMenu.classList.toggle('show');
+                });
             }
             
-            // Render initial dashboard content
-            renderDashboardSection('dashboard');
-            
-            // Setup user menu dropdown
+            // User dropdown
             const userMenuBtn = document.getElementById('userMenuBtn');
-            const userDropdown = document.getElementById('userDropdown');
+            const userMenu = document.getElementById('userMenu');
             
-            userMenuBtn.addEventListener('click', () => {
-                userDropdown.classList.toggle('hidden');
-            });
+            if (userMenuBtn && userMenu) {
+                userMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    console.log('User menu button clicked');
+                    closeAllDropdowns();
+                    userMenu.classList.toggle('show');
+                });
+            }
             
-            // Close dropdown when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-                    userDropdown.classList.add('hidden');
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown')) {
+                    closeAllDropdowns();
                 }
             });
             
-            // Online/offline handling
-            window.addEventListener('online', () => {
-                document.getElementById('offline-indicator').classList.add('hidden');
-                showToast('You\'re back online!', 'success');
-            });
-            
-            window.addEventListener('offline', () => {
-                document.getElementById('offline-indicator').classList.remove('hidden');
-            });
-        })();
-        
-        // Global function: Render dashboard section
-        function renderDashboardSection(section) {
-            const mainContent = document.getElementById('main-content');
-            
-            if (section === 'dashboard') {
-                // Render dashboard content
-                mainContent.innerHTML = `
-                    <div class="fade-in">
-                        <!-- Quick Actions -->
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                            <button onclick="showTransferModal()" class="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-lg flex items-center justify-center space-x-2 transition-colors">
-                                <i class="fas fa-exchange-alt"></i>
-                                <span>Transfer</span>
-                            </button>
-                            <button onclick="showDepositModal()" class="bg-green-600 hover:bg-green-700 text-white p-4 rounded-lg flex items-center justify-center space-x-2 transition-colors">
-                                <i class="fas fa-plus"></i>
-                                <span>Deposit</span>
-                            </button>
-                            <button onclick="showSection('bills')" class="bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-lg flex items-center justify-center space-x-2 transition-colors">
-                                <i class="fas fa-file-invoice-dollar"></i>
-                                <span>Pay Bills</span>
-                            </button>
-                            <button onclick="showSection('transactions')" class="bg-gray-600 hover:bg-gray-700 text-white p-4 rounded-lg flex items-center justify-center space-x-2 transition-colors">
-                                <i class="fas fa-history"></i>
-                                <span>History</span>
-                            </button>
-                        </div>
-
-                        <!-- Total Balance -->
-                        <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg shadow-lg p-6 mb-8 text-white">
-                            <p class="text-blue-100 mb-1">Total Balance</p>
-                            <p class="text-4xl font-bold" id="total-balance">$0.00</p>
-                        </div>
-
-                        <!-- Accounts Summary -->
-                        <h2 class="text-2xl font-bold mb-4 text-white">Your Accounts</h2>
-                        <div id="accounts-summary" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                            <div class="bg-dark-700 rounded-lg p-6 text-center">
-                                <p class="text-gray-400">Loading accounts...</p>
-                            </div>
-                        </div>
-
-                        <!-- Recent Transactions -->
-                        <h2 class="text-2xl font-bold mb-4 text-white">Recent Transactions</h2>
-                        <div class="bg-dark-700 rounded-lg shadow p-6">
-                            <div id="recent-transactions">
-                                <p class="text-gray-400">Loading transactions...</p>
-                            </div>
-                        </div>
-
-                        <!-- Modal Container -->
-                        <div id="modal-container"></div>
-                    </div>
-                `;
-                
-                // Load dashboard data
-                loadDashboardData();
-            } else if (section === 'accounts') {
-                mainContent.innerHTML = `
-                    <div class="fade-in">
-                        <h2 class="text-2xl font-bold mb-4 text-white">Your Accounts</h2>
-                        <div id="accounts-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-dark-700 rounded-lg p-6 text-center">
-                                <p class="text-gray-400">Loading...</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                loadAccountsSection();
-            } else if (section === 'transactions') {
-                mainContent.innerHTML = `
-                    <div class="fade-in">
-                        <h2 class="text-2xl font-bold mb-6 text-white">Transaction History</h2>
-                        <div class="bg-dark-700 rounded-lg shadow p-6 mb-6">
-                            <div class="flex flex-wrap gap-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-300 mb-1">From Date</label>
-                                    <input type="date" id="txn-start-date" class="px-3 py-2 bg-dark-600 border border-gray-600 rounded-lg text-white">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-300 mb-1">To Date</label>
-                                    <input type="date" id="txn-end-date" class="px-3 py-2 bg-dark-600 border border-gray-600 rounded-lg text-white">
-                                </div>
-                                <div class="flex items-end">
-                                    <button onclick="loadTransactionsSection()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Filter</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bg-dark-700 rounded-lg shadow">
-                            <div id="transactions-list" class="divide-y divide-gray-700">
-                                <p class="p-6 text-gray-400">Loading...</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                loadTransactionsSection();
-            } else if (section === 'transfer') {
-                mainContent.innerHTML = `<div id="modal-container"></div>`;
-                showTransferModal();
-            } else if (section === 'bills') {
-                mainContent.innerHTML = `
-                    <div class="fade-in">
-                        <h2 class="text-2xl font-bold mb-6 text-white">Bill Payments</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                            <div class="bg-dark-700 rounded-lg shadow p-6">
-                                <h3 class="text-lg font-bold mb-4 text-white">Your Payees</h3>
-                                <div id="payees-list" class="space-y-3">
-                                    <p class="text-gray-400">Loading...</p>
-                                </div>
-                                <button onclick="showAddPayeeModal()" class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Add Payee</button>
-                            </div>
-                            <div class="bg-dark-700 rounded-lg shadow p-6">
-                                <h3 class="text-lg font-bold mb-4 text-white">Scheduled Payments</h3>
-                                <div id="payments-list" class="space-y-3">
-                                    <p class="text-gray-400">Loading...</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="modal-container"></div>
-                `;
-                loadBillsSection();
-            } else if (section === 'settings') {
-                window.location.href = '/settings.html';
-            } else if (section === 'cards') {
-                mainContent.innerHTML = `
-                    <div class="fade-in">
-                        <h2 class="text-2xl font-bold mb-6 text-white">Your Cards</h2>
-                        <div class="bg-dark-700 rounded-lg p-6 text-center">
-                            <i class="fas fa-credit-card text-4xl text-gray-500 mb-4"></i>
-                            <p class="text-gray-400">No cards available. Contact support to request a debit card.</p>
-                        </div>
-                    </div>
-                `;
+            // Mark all read button
+            const markAllReadBtn = document.getElementById('markAllReadBtn');
+            if (markAllReadBtn) {
+                markAllReadBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    markAllNotificationsRead();
+                });
             }
         }
         
-        // Global function: Load dashboard data
+        function closeAllDropdowns() {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.classList.remove('show');
+            });
+        }
+        
+        // ============================================
+        // NOTIFICATIONS
+        // ============================================
+        async function loadNotifications() {
+            try {
+                const data = await API.get('/notifications');
+                notifications = data.notifications || [];
+                updateNotificationBadge();
+                renderNotifications();
+            } catch (error) {
+                console.log('Could not load notifications:', error.message);
+                // Show mock notifications for demo
+                notifications = [
+                    { id: 1, title: 'Welcome!', message: 'Welcome to Apex Capital', is_read: false, created_at: new Date().toISOString() },
+                    { id: 2, title: 'Account Created', message: 'Your account has been set up successfully', is_read: false, created_at: new Date().toISOString() }
+                ];
+                updateNotificationBadge();
+                renderNotifications();
+            }
+        }
+        
+        function updateNotificationBadge() {
+            const badge = document.getElementById('notificationBadge');
+            const unreadCount = notifications.filter(n => !n.is_read).length;
+            
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+        
+        function renderNotifications() {
+            const container = document.getElementById('notificationsList');
+            
+            if (notifications.length === 0) {
+                container.innerHTML = '<div class="p-4 text-center text-gray-400">No notifications</div>';
+                return;
+            }
+            
+            container.innerHTML = notifications.map(n => `
+                <div class="notification-item ${n.is_read ? '' : 'unread'}" onclick="markNotificationRead(${n.id})">
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-bell text-xs"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="font-medium text-white text-sm">${n.title}</p>
+                            <p class="text-gray-400 text-xs mt-1">${n.message}</p>
+                            <p class="text-gray-500 text-xs mt-1">${formatTimeAgo(n.created_at)}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        async function markNotificationRead(id) {
+            try {
+                await API.post('/notifications/' + id + '/read');
+            } catch (error) {
+                console.log('Mark read error:', error.message);
+            }
+            
+            const notification = notifications.find(n => n.id === id);
+            if (notification) {
+                notification.is_read = true;
+                updateNotificationBadge();
+                renderNotifications();
+            }
+        }
+        
+        async function markAllNotificationsRead() {
+            try {
+                await API.post('/notifications/mark-all-read');
+            } catch (error) {
+                console.log('Mark all read error:', error.message);
+            }
+            
+            notifications.forEach(n => n.is_read = true);
+            updateNotificationBadge();
+            renderNotifications();
+            showToast('All notifications marked as read', 'success');
+        }
+        
+        function formatTimeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diff = Math.floor((now - date) / 1000);
+            
+            if (diff < 60) return 'Just now';
+            if (diff < 3600) return Math.floor(diff / 60) + ' min ago';
+            if (diff < 86400) return Math.floor(diff / 3600) + ' hours ago';
+            return Math.floor(diff / 86400) + ' days ago';
+        }
+        
+        // ============================================
+        // MOBILE MENU
+        // ============================================
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.getElementById('sidebar');
+            
+            if (mobileMenuBtn && sidebar) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    sidebar.classList.toggle('open');
+                });
+            }
+        }
+        
+        // ============================================
+        // HELP MODAL
+        // ============================================
+        function setupHelpLink() {
+            const helpLink = document.getElementById('helpLink');
+            if (helpLink) {
+                helpLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showHelpModal();
+                });
+            }
+        }
+        
+        function showHelpModal() {
+            document.getElementById('help-modal').classList.remove('hidden');
+        }
+        
+        function closeHelpModal() {
+            document.getElementById('help-modal').classList.add('hidden');
+        }
+        
+        // ============================================
+        // LOGOUT
+        // ============================================
+        function setupLogout() {
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    logout();
+                });
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            localStorage.removeItem('accounts');
+            window.location.href = '/';
+        }
+        
+        // ============================================
+        // DASHBOARD DATA
+        // ============================================
         async function loadDashboardData() {
             try {
                 // Load accounts
                 const accountsData = await API.get('/accounts');
                 userAccounts = accountsData.accounts || [];
                 
-                // Store accounts in localStorage for later use
                 localStorage.setItem('accounts', JSON.stringify(userAccounts));
                 
                 // Update total balance
                 const totalBalance = userAccounts.reduce((sum, acc) => sum + parseFloat(acc.balance || 0), 0);
-                document.getElementById('total-balance').textContent = new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'USD'
-                }).format(totalBalance);
+                document.getElementById('total-balance').textContent = formatCurrency(totalBalance);
                 
                 // Render accounts
-                const accountsContainer = document.getElementById('accounts-summary');
-                if (userAccounts.length > 0) {
-                    accountsContainer.innerHTML = userAccounts.map(acc => `
-                        <div class="bg-dark-700 rounded-lg shadow p-4 card-hover transition-all duration-300">
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <span class="text-xs text-gray-400 uppercase">${acc.account_type}</span>
-                                    <p class="font-mono text-sm text-gray-300">****${(acc.account_number || '').slice(-4)}</p>
-                                </div>
-                                <i class="fas ${acc.account_type === 'checking' ? 'fa-wallet' : 'fa-piggy-bank'} text-2xl text-accent-gold"></i>
-                            </div>
-                            <p class="text-2xl font-bold text-white">
-                                ${new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(parseFloat(acc.balance || 0))}
-                            </p>
-                            <span class="inline-block mt-2 px-2 py-1 text-xs rounded-full bg-green-900 text-green-300">${acc.status || 'active'}</span>
-                        </div>
-                    `).join('');
-                } else {
-                    accountsContainer.innerHTML = '<p class="text-gray-400 col-span-3">No accounts found. Please contact support.</p>';
-                }
+                renderAccounts();
                 
-                // Load recent transactions
+                // Load transactions
                 if (userAccounts.length > 0) {
-                    const txnData = await API.get(`/accounts/${userAccounts[0].id}/transactions?limit=5`);
-                    const txnContainer = document.getElementById('recent-transactions');
-                    
-                    if (txnData.transactions && txnData.transactions.length > 0) {
-                        txnContainer.innerHTML = txnData.transactions.map(txn => `
-                            <div class="flex items-center justify-between py-3 border-b border-gray-700 last:border-0">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 rounded-full bg-dark-600 flex items-center justify-center">
-                                        <i class="fas ${txn.transaction_type === 'deposit' ? 'fa-arrow-down text-green-400' : 'fa-arrow-up text-red-400'}"></i>
-                                    </div>
-                                    <div>
-                                        <p class="font-medium text-white">${txn.description || txn.transaction_type}</p>
-                                        <p class="text-xs text-gray-400">${new Date(txn.created_at).toLocaleDateString()}</p>
-                                    </div>
-                                </div>
-                                <p class="font-semibold ${txn.transaction_type === 'deposit' ? 'text-green-400' : 'text-red-400'}">
-                                    ${txn.transaction_type === 'deposit' ? '+' : '-'}${new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(parseFloat(txn.amount))}
-                                </p>
-                            </div>
-                        `).join('');
-                    } else {
-                        txnContainer.innerHTML = '<p class="text-gray-400">No recent transactions</p>';
-                    }
+                    await loadTransactions();
                 }
             } catch (error) {
                 console.error('Error loading dashboard:', error);
-                showToast('Failed to load dashboard data: ' + error.message, 'error');
+                showToast('Failed to load dashboard data', 'error');
             }
         }
         
-        // Global function: Load accounts section
-        async function loadAccountsSection() {
-            try {
-                const data = await API.get('/accounts');
-                userAccounts = data.accounts || [];
-                const container = document.getElementById('accounts-list');
-                
-                if (userAccounts.length > 0) {
-                    container.innerHTML = userAccounts.map(acc => `
-                        <div class="bg-dark-700 rounded-lg shadow p-6">
-                            <div class="flex justify-between items-start mb-4">
-                                <div>
-                                    <span class="text-xs text-gray-400 uppercase">${acc.account_type}</span>
-                                    <p class="font-mono text-lg text-white">${acc.account_number}</p>
-                                </div>
-                                <span class="px-2 py-1 text-xs rounded-full bg-green-900 text-green-300">${acc.status || 'active'}</span>
+        function renderAccounts() {
+            const container = document.getElementById('accounts-summary');
+            
+            if (userAccounts.length > 0) {
+                container.innerHTML = userAccounts.map(acc => `
+                    <div class="bg-dark-700 rounded-lg shadow p-4 card-hover transition-all duration-300">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <span class="text-xs text-gray-400 uppercase">${acc.account_type || 'Account'}</span>
+                                <p class="font-mono text-sm text-gray-300">****${(acc.account_number || '').slice(-4)}</p>
                             </div>
-                            <p class="text-3xl font-bold text-white mb-4">
-                                ${new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(parseFloat(acc.balance || 0))}
-                            </p>
-                            <p class="text-sm text-gray-400">Currency: ${acc.currency || 'USD'}</p>
+                            <i class="fas ${acc.account_type === 'checking' ? 'fa-wallet' : 'fa-piggy-bank'} text-2xl text-accent-gold"></i>
                         </div>
-                    `).join('');
-                } else {
-                    container.innerHTML = '<p class="text-gray-400">No accounts found</p>';
-                }
-            } catch (error) {
-                console.error('Error loading accounts:', error);
-                showToast('Failed to load accounts', 'error');
+                        <p class="text-2xl font-bold text-white">${formatCurrency(acc.balance || 0)}</p>
+                        <span class="inline-block mt-2 px-2 py-1 text-xs rounded-full bg-green-900 text-green-300">${acc.status || 'active'}</span>
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = '<p class="text-gray-400 col-span-3">No accounts found. Please contact support.</p>';
             }
         }
         
-        // Global function: Load transactions section
-        async function loadTransactionsSection() {
+        async function loadTransactions() {
             try {
-                const startDate = document.getElementById('txn-start-date')?.value || '';
-                const endDate = document.getElementById('txn-end-date')?.value || '';
+                const txnData = await API.get('/accounts/' + userAccounts[0].id + '/transactions?limit=5');
+                const container = document.getElementById('recent-transactions');
                 
-                let url = '/transactions?limit=20';
-                if (startDate) url += `&start_date=${startDate}`;
-                if (endDate) url += `&end_date=${endDate}`;
-                
-                const data = await API.get(url);
-                const container = document.getElementById('transactions-list');
-                
-                if (data.transactions && data.transactions.length > 0) {
-                    container.innerHTML = data.transactions.map(txn => `
-                        <div class="p-4 flex items-center justify-between hover:bg-dark-600">
-                            <div class="flex items-center space-x-4">
+                if (txnData.transactions && txnData.transactions.length > 0) {
+                    container.innerHTML = txnData.transactions.map(txn => `
+                        <div class="flex items-center justify-between py-3 border-b border-gray-700 last:border-0">
+                            <div class="flex items-center space-x-3">
                                 <div class="w-10 h-10 rounded-full bg-dark-600 flex items-center justify-center">
                                     <i class="fas ${txn.transaction_type === 'deposit' ? 'fa-arrow-down text-green-400' : 'fa-arrow-up text-red-400'}"></i>
                                 </div>
                                 <div>
                                     <p class="font-medium text-white">${txn.description || txn.transaction_type}</p>
-                                    <p class="text-sm text-gray-400">${new Date(txn.created_at).toLocaleDateString()}</p>
+                                    <p class="text-xs text-gray-400">${formatDate(txn.created_at)}</p>
                                 </div>
                             </div>
-                            <p class="font-bold ${txn.transaction_type === 'deposit' ? 'text-green-400' : 'text-red-400'}">
-                                ${txn.transaction_type === 'deposit' ? '+' : '-'}${new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(parseFloat(txn.amount))}
+                            <p class="font-semibold ${txn.transaction_type === 'deposit' ? 'text-green-400' : 'text-red-400'}">
+                                ${txn.transaction_type === 'deposit' ? '+' : '-'}${formatCurrency(txn.amount)}
                             </p>
                         </div>
                     `).join('');
                 } else {
-                    container.innerHTML = '<p class="p-6 text-gray-400">No transactions found</p>';
+                    container.innerHTML = '<p class="text-gray-400">No recent transactions</p>';
                 }
             } catch (error) {
                 console.error('Error loading transactions:', error);
-                showToast('Failed to load transactions', 'error');
             }
         }
         
-        // Global function: Load bills section
-        async function loadBillsSection() {
-            try {
-                const [payeesData, paymentsData] = await Promise.all([
-                    API.get('/bills/payees').catch(() => ({payees: []})),
-                    API.get('/bills/payments').catch(() => ({payments: []}))
-                ]);
-
-                document.getElementById('payees-list').innerHTML = payeesData.payees?.length > 0 
-                    ? payeesData.payees.map(p => `
-                        <div class="flex justify-between items-center p-3 bg-dark-600 rounded">
-                            <div>
-                                <p class="font-medium text-white">${p.payee_name}</p>
-                                <p class="text-sm text-gray-400">${p.bank_name}</p>
-                            </div>
-                            <button onclick="showPayBillModal(${p.id}, '${p.payee_name}')" class="text-blue-400 hover:underline">Pay</button>
-                        </div>
-                    `).join('')
-                    : '<p class="text-gray-400">No payees added</p>';
-
-                document.getElementById('payments-list').innerHTML = paymentsData.payments?.length > 0
-                    ? paymentsData.payments.map(p => `
-                        <div class="flex justify-between items-center p-3 bg-dark-600 rounded">
-                            <div>
-                                <p class="font-medium text-white">${p.payee_name}</p>
-                                <p class="text-sm text-gray-400">Due: ${new Date(p.payment_date).toLocaleDateString()}</p>
-                            </div>
-                            <span class="px-2 py-1 text-xs rounded ${p.status === 'paid' ? 'bg-green-900 text-green-300' : 'bg-yellow-900 text-yellow-300'}">${p.status}</span>
-                        </div>
-                    `).join('')
-                    : '<p class="text-gray-400">No scheduled payments</p>';
-            } catch (error) {
-                console.error('Error loading bills:', error);
-            }
-        }
-        
-        // Global function: Show transfer modal
+        // ============================================
+        // MODALS
+        // ============================================
         function showTransferModal() {
             const modal = document.getElementById('modal-container');
             modal.innerHTML = `
-                <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div class="bg-dark-700 rounded-lg p-6 w-full max-w-md mx-4">
+                <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onclick="closeModal(event)">
+                    <div class="bg-dark-700 rounded-lg p-6 w-full max-w-md mx-4" onclick="event.stopPropagation()">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-xl font-bold text-white">Money Transfer</h3>
                             <button onclick="closeModal()" class="text-gray-400 hover:text-white">
@@ -830,7 +710,7 @@
                             </div>
                             <div class="mb-4">
                                 <label class="block text-gray-300 text-sm font-bold mb-2">Amount</label>
-                                <input type="number" id="amount" class="w-full px-3 py-2 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500" required min="0.01" step="0.01">
+                                <input type="number" id="amount" class="w-full px-3 py-2 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500" required min="0.01" step="0.01" placeholder="0.00">
                             </div>
                             <div class="mb-4">
                                 <label class="block text-gray-300 text-sm font-bold mb-2">Description (Optional)</label>
@@ -845,30 +725,31 @@
                 </div>
             `;
             
-            document.getElementById('transfer-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                try {
-                    await API.post('/transactions/transfer', {
-                        from_account_id: userAccounts[0]?.id,
-                        to_account_id: parseInt(document.getElementById('to-account').value),
-                        amount: parseFloat(document.getElementById('amount').value),
-                        description: document.getElementById('description').value
-                    });
-                    closeModal();
-                    showToast('Transfer successful!', 'success');
-                    loadDashboardData();
-                } catch (error) {
-                    showToast(error.message || 'Transfer failed', 'error');
-                }
-            });
+            document.getElementById('transfer-form').addEventListener('submit', handleTransfer);
         }
         
-        // Global function: Show deposit modal
+        async function handleTransfer(e) {
+            e.preventDefault();
+            try {
+                await API.post('/transactions/transfer', {
+                    from_account_id: userAccounts[0]?.id,
+                    to_account_id: parseInt(document.getElementById('to-account').value),
+                    amount: parseFloat(document.getElementById('amount').value),
+                    description: document.getElementById('description').value
+                });
+                closeModal();
+                showToast('Transfer successful!', 'success');
+                loadDashboardData();
+            } catch (error) {
+                showToast(error.message || 'Transfer failed', 'error');
+            }
+        }
+        
         function showDepositModal() {
             const modal = document.getElementById('modal-container');
             modal.innerHTML = `
-                <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div class="bg-dark-700 rounded-lg p-6 w-full max-w-md mx-4">
+                <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onclick="closeModal(event)">
+                    <div class="bg-dark-700 rounded-lg p-6 w-full max-w-md mx-4" onclick="event.stopPropagation()">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-xl font-bold text-white">Deposit Money</h3>
                             <button onclick="closeModal()" class="text-gray-400 hover:text-white">
@@ -878,7 +759,7 @@
                         <form id="deposit-form">
                             <div class="mb-4">
                                 <label class="block text-gray-300 text-sm font-bold mb-2">Amount</label>
-                                <input type="number" id="deposit-amount" class="w-full px-3 py-2 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500" required min="0.01" step="0.01">
+                                <input type="number" id="deposit-amount" class="w-full px-3 py-2 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500" required min="0.01" step="0.01" placeholder="0.00">
                             </div>
                             <div class="mb-4">
                                 <label class="block text-gray-300 text-sm font-bold mb-2">Description (Optional)</label>
@@ -893,81 +774,33 @@
                 </div>
             `;
             
-            document.getElementById('deposit-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                try {
-                    await API.post('/transactions/deposit', {
-                        account_id: userAccounts[0]?.id,
-                        amount: parseFloat(document.getElementById('deposit-amount').value),
-                        description: document.getElementById('deposit-description').value
-                    });
-                    closeModal();
-                    showToast('Deposit successful!', 'success');
-                    loadDashboardData();
-                } catch (error) {
-                    showToast(error.message || 'Deposit failed', 'error');
-                }
-            });
+            document.getElementById('deposit-form').addEventListener('submit', handleDeposit);
         }
         
-        // Global function: Close modal
-        function closeModal() {
-            const modal = document.getElementById('modal-container');
-            if (modal) modal.innerHTML = '';
-        }
-        
-        // Global function: Show section (navigation)
-        function showSection(section) {
-            // Update nav links
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('text-white', 'bg-blue-600', 'bg-opacity-20', 'border-l-2', 'border-blue-500');
-                link.classList.add('text-gray-400');
-                link.removeAttribute('aria-current');
-            });
-            
-            const activeLink = document.querySelector(`.nav-link[data-section="${section}"]`);
-            if (activeLink) {
-                activeLink.classList.remove('text-gray-400');
-                activeLink.classList.add('text-white', 'bg-blue-600', 'bg-opacity-20', 'border-l-2', 'border-blue-500');
-                activeLink.setAttribute('aria-current', 'page');
+        async function handleDeposit(e) {
+            e.preventDefault();
+            try {
+                await API.post('/transactions/deposit', {
+                    account_id: userAccounts[0]?.id,
+                    amount: parseFloat(document.getElementById('deposit-amount').value),
+                    description: document.getElementById('deposit-description').value
+                });
+                closeModal();
+                showToast('Deposit successful!', 'success');
+                loadDashboardData();
+            } catch (error) {
+                showToast(error.message || 'Deposit failed', 'error');
             }
-            
-            // Update page title
-            const titles = {
-                dashboard: { title: 'Dashboard', subtitle: 'Welcome back to your dashboard' },
-                accounts: { title: 'Accounts', subtitle: 'Manage your bank accounts' },
-                transactions: { title: 'Transactions', subtitle: 'View your transaction history' },
-                transfer: { title: 'Transfer', subtitle: 'Send money to other accounts' },
-                bills: { title: 'Bill Pay', subtitle: 'Manage your bill payments' },
-                cards: { title: 'Cards', subtitle: 'Manage your debit and credit cards' },
-                settings: { title: 'Settings', subtitle: 'Manage your profile and preferences' }
-            };
-            
-            const pageInfo = titles[section] || titles.dashboard;
-            document.getElementById('page-title').textContent = pageInfo.title;
-            document.getElementById('page-subtitle').textContent = pageInfo.subtitle;
-            
-            // Render section
-            renderDashboardSection(section);
-            
-            // Close mobile sidebar
-            document.getElementById('sidebar').classList.remove('open');
         }
         
-        // Global function: Toggle sidebar
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
+        function closeModal(e) {
+            if (e && e.target !== e.currentTarget) return;
+            document.getElementById('modal-container').innerHTML = '';
         }
         
-        // Global function: Logout
-        function logout() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            localStorage.removeItem('accounts');
-            window.location.href = '/';
-        }
-        
-        // Global function: Show toast
+        // ============================================
+        // TOAST NOTIFICATIONS
+        // ============================================
         function showToast(message, type) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -978,7 +811,7 @@
                 info: 'bg-blue-600'
             };
 
-            toast.className = `${colors[type] || 'bg-blue-600'} text-white px-6 py-3 rounded-lg shadow-lg mb-2 fade-in`;
+            toast.className = (colors[type] || 'bg-blue-600') + ' text-white px-6 py-3 rounded-lg shadow-lg mb-2 fade-in';
             toast.textContent = message;
 
             container.appendChild(toast);
@@ -988,106 +821,18 @@
             }, 3000);
         }
         
-        // Global function: Show pay bill modal
-        function showPayBillModal(payeeId, payeeName) {
-            const modal = document.getElementById('modal-container');
-            modal.innerHTML = `
-                <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div class="bg-dark-700 rounded-lg p-6 w-full max-w-md mx-4">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-white">Pay ${payeeName}</h3>
-                            <button onclick="closeModal()" class="text-gray-400 hover:text-white">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <form id="pay-bill-form">
-                            <div class="mb-4">
-                                <label class="block text-gray-300 text-sm font-bold mb-2">Amount</label>
-                                <input type="number" id="bill-amount" class="w-full px-3 py-2 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500" required min="0.01" step="0.01">
-                            </div>
-                            <div class="mb-4">
-                                <label class="block text-gray-300 text-sm font-bold mb-2">Payment Date</label>
-                                <input type="date" id="bill-date" class="w-full px-3 py-2 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500" required>
-                            </div>
-                            <div class="flex gap-3">
-                                <button type="submit" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Schedule Payment</button>
-                                <button type="button" onclick="closeModal()" class="flex-1 bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-500">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            `;
-            
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('bill-date').min = today;
-
-            document.getElementById('pay-bill-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                try {
-                    await API.post('/bills/payments', {
-                        payee_id: payeeId,
-                        from_account_id: userAccounts[0]?.id,
-                        amount: parseFloat(document.getElementById('bill-amount').value),
-                        payment_date: document.getElementById('bill-date').value
-                    });
-                    closeModal();
-                    showToast('Payment scheduled successfully', 'success');
-                    loadBillsSection();
-                } catch (error) {
-                    showToast(error.message || 'Failed to schedule payment', 'error');
-                }
-            });
+        // ============================================
+        // UTILITY FUNCTIONS
+        // ============================================
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).format(parseFloat(amount || 0));
         }
         
-        // Global function: Show add payee modal
-        function showAddPayeeModal() {
-            const modal = document.getElementById('modal-container');
-            modal.innerHTML = `
-                <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div class="bg-dark-700 rounded-lg p-6 w-full max-w-md mx-4">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-white">Add Payee</h3>
-                            <button onclick="closeModal()" class="text-gray-400 hover:text-white">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <form id="add-payee-form">
-                            <div class="mb-4">
-                                <label class="block text-gray-300 text-sm font-bold mb-2">Payee Name</label>
-                                <input type="text" id="payee-name" class="w-full px-3 py-2 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500" required>
-                            </div>
-                            <div class="mb-4">
-                                <label class="block text-gray-300 text-sm font-bold mb-2">Account Number</label>
-                                <input type="text" id="payee-account" class="w-full px-3 py-2 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500" required>
-                            </div>
-                            <div class="mb-4">
-                                <label class="block text-gray-300 text-sm font-bold mb-2">Bank Name</label>
-                                <input type="text" id="payee-bank" class="w-full px-3 py-2 bg-dark-600 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500" required>
-                            </div>
-                            <div class="flex gap-3">
-                                <button type="submit" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Add Payee</button>
-                                <button type="button" onclick="closeModal()" class="flex-1 bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-500">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('add-payee-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                try {
-                    await API.post('/bills/payees', {
-                        payee_name: document.getElementById('payee-name').value,
-                        account_number: document.getElementById('payee-account').value,
-                        bank_name: document.getElementById('payee-bank').value
-                    });
-                    closeModal();
-                    showToast('Payee added successfully', 'success');
-                    loadBillsSection();
-                } catch (error) {
-                    showToast(error.message || 'Failed to add payee', 'error');
-                }
-            });
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString();
         }
     </script>
 </body>

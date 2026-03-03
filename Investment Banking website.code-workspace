@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.html": "html",
+			"*.js": "javascript",
+			"*.sql": "mysql"
+		},
+		"javascript.validate.enable": true,
+		"json.validate.enable": true
+	}
+}
