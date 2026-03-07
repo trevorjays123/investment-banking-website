@@ -184,6 +184,57 @@ const Utils = {
   },
 
   // ============================================
+  // SECURITY UTILITIES
+  // ============================================
+
+  /**
+   * Escape HTML special characters to prevent XSS attacks
+   * @param {string} str - String to escape
+   * @returns {string} Escaped string safe for HTML insertion
+   */
+  escapeHtml: function(str) {
+    if (str === null || str === undefined) return '';
+    const div = document.createElement('div');
+    div.textContent = String(str);
+    return div.innerHTML;
+  },
+
+  /**
+   * Escape HTML in object properties (recursive)
+   * @param {object} obj - Object with properties to escape
+   * @param {array} keys - Keys to escape (optional, escapes all string keys if not provided)
+   * @returns {object} New object with escaped properties
+   */
+  escapeHtmlObject: function(obj, keys = null) {
+    if (!obj || typeof obj !== 'object') return obj;
+    
+    const escaped = Array.isArray(obj) ? [] : {};
+    
+    for (const key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        const value = obj[key];
+        
+        if (value === null || value === undefined) {
+          escaped[key] = value;
+        } else if (typeof value === 'string') {
+          // Escape all strings or only specified keys
+          if (keys === null || keys.includes(key)) {
+            escaped[key] = this.escapeHtml(value);
+          } else {
+            escaped[key] = value;
+          }
+        } else if (typeof value === 'object') {
+          escaped[key] = this.escapeHtmlObject(value, keys);
+        } else {
+          escaped[key] = value;
+        }
+      }
+    }
+    
+    return escaped;
+  },
+
+  // ============================================
   // STRING UTILITIES
   // ============================================
 

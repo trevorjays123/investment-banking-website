@@ -1,0 +1,13 @@
+{
+  "workspace": {
+    "ui": {
+      "colors": [
+        {
+          "role": "primary",
+          "value": "black"
+        }
+      ]
+    }
+  },
+  "updated_at": 1772593152308
+}

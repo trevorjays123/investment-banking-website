@@ -135,6 +135,9 @@ router.post('/login', [
 
     // Verify password
     console.log('6. Comparing passwords...');
+    console.log('   Input password:', JSON.stringify(password));
+    console.log('   Input password length:', password ? password.length : 0);
+    console.log('   Stored hash:', user.password_hash);
     const isMatch = await bcrypt.compare(password, user.password_hash);
     console.log('7. Password comparison result:', isMatch ? 'Match' : 'No Match');
     

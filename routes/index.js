@@ -7,6 +7,7 @@ const accountsRoutes = require('./accounts');
 const transactionsRoutes = require('./transactions');
 const billsRoutes = require('./bills');
 const profileRoutes = require('./profile');
+const adminRoutes = require('./admin');
 
 // Mount routes
 router.use('/auth', authRoutes);
@@ -14,6 +15,7 @@ router.use('/accounts', accountsRoutes);
 router.use('/transactions', transactionsRoutes);
 router.use('/bills', billsRoutes);
 router.use('/profile', profileRoutes);
+router.use('/admin', adminRoutes);
 
 // Health check endpoint
 router.get('/health', (req, res) => {
@@ -34,7 +36,8 @@ router.get('/', (req, res) => {
             accounts: '/api/accounts',
             transactions: '/api/transactions',
             bills: '/api/bills',
-            profile: '/api/profile'
+            profile: '/api/profile',
+            admin: '/api/admin'
         }
     });
 });

@@ -11,6 +11,8 @@
   
   /* Fix for Firefox/Safari - text-size-adjust is not supported */
   html {
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
   

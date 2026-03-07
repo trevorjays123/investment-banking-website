@@ -14,6 +14,7 @@
   "html.validate.scripts": false,
   "html.validate.styles": false,
   "css.validate": true,
+  "css.lint.unknownAtRules": "ignore",
   "javascript.validate.enable": true,
   "sql.validate.enable": false,
   "sqltools.useNodeRuntime": true,

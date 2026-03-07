@@ -330,7 +330,7 @@
         <div class="bg-dark-800 rounded-lg p-6 w-full max-w-md mx-4">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl font-bold text-white">Help & Support</h3>
-                <button onclick="closeHelpModal()" class="text-gray-400 hover:text-white">
+                <button type="button" onclick="closeHelpModal()" class="text-gray-400 hover:text-white" title="Close modal" aria-label="Close modal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -358,6 +358,10 @@
         // Global variables
         let userAccounts = [];
         let notifications = [];
+        let isLoading = false;
+        let loadAttempts = 0;
+        const MAX_LOAD_ATTEMPTS = 3;
+        const LOAD_TIMEOUT = 15000; // 15 seconds
         
         // ============================================
         // INITIALIZATION
@@ -372,11 +376,11 @@
                 return;
             }
             
+            // Show loading state
+            showLoadingState('Initializing dashboard...');
+            
             // Load user info
             loadUserInfo();
-            
-            // Load dashboard data
-            loadDashboardData();
             
             // Setup dropdowns
             setupDropdowns();
@@ -384,15 +388,140 @@
             // Setup mobile menu
             setupMobileMenu();
             
-            // Load notifications
-            loadNotifications();
-            
             // Setup help link
             setupHelpLink();
             
             // Setup logout
             setupLogout();
+            
+            // Check server health first
+            checkServerHealth().then(() => {
+                // Load dashboard data
+                loadDashboardData();
+                
+                // Load notifications
+                loadNotifications();
+            }).catch(error => {
+                console.error('Server health check failed:', error);
+                showOfflineState();
+            });
         });
+        
+        // ============================================
+        // LOADING STATE MANAGEMENT
+        // ============================================
+        function showLoadingState(message) {
+            isLoading = true;
+            const container = document.getElementById('accounts-summary');
+            const txnContainer = document.getElementById('recent-transactions');
+            
+            if (container) {
+                container.innerHTML = `
+                    <div class="col-span-3 flex flex-col items-center justify-center py-8">
+                        <div class="animate-spin rounded-full h-10 w-10 border-4 border-blue-500 border-t-transparent mb-4"></div>
+                        <p class="text-gray-400">${message || 'Loading...'}</p>
+                    </div>
+                `;
+            }
+            
+            if (txnContainer) {
+                txnContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-8">
+                        <div class="animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent mb-4"></div>
+                        <p class="text-gray-400">Loading transactions...</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function hideLoadingState() {
+            isLoading = false;
+        }
+        
+        function showOfflineState() {
+            hideLoadingState();
+            const container = document.getElementById('accounts-summary');
+            const txnContainer = document.getElementById('recent-transactions');
+            
+            if (container) {
+                container.innerHTML = `
+                    <div class="col-span-3 text-center py-8">
+                        <i class="fas fa-exclamation-triangle text-4xl text-yellow-500 mb-4"></i>
+                        <p class="text-gray-400 mb-4">Unable to connect to server</p>
+                        <button onclick="retryLoad()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
+                            <i class="fas fa-redo mr-2"></i>Retry
+                        </button>
+                    </div>
+                `;
+            }
+            
+            if (txnContainer) {
+                txnContainer.innerHTML = `
+                    <div class="text-center py-8">
+                        <i class="fas fa-exclamation-triangle text-3xl text-yellow-500 mb-4"></i>
+                        <p class="text-gray-400">Unable to load transactions</p>
+                    </div>
+                `;
+            }
+            
+            showToast('Server connection failed. Please check your connection.', 'error');
+        }
+        
+        function showEmptyState() {
+            hideLoadingState();
+            const container = document.getElementById('accounts-summary');
+            
+            if (container) {
+                container.innerHTML = `
+                    <div class="col-span-3 text-center py-8">
+                        <i class="fas fa-wallet text-4xl text-gray-500 mb-4"></i>
+                        <p class="text-gray-400 mb-4">No accounts found</p>
+                        <p class="text-gray-500 text-sm">Please contact support to set up your account.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        async function checkServerHealth() {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                const response = await fetch('/api/health', {
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) {
+                    throw new Error('Server health check failed');
+                }
+                
+                console.log('Server health check passed');
+                return true;
+            } catch (error) {
+                console.error('Server health check failed:', error);
+                throw error;
+            }
+        }
+        
+        function retryLoad() {
+            loadAttempts++;
+            
+            if (loadAttempts > MAX_LOAD_ATTEMPTS) {
+                showToast('Maximum retry attempts reached. Please refresh the page.', 'error');
+                return;
+            }
+            
+            showLoadingState('Retrying... (' + loadAttempts + '/' + MAX_LOAD_ATTEMPTS + ')');
+            
+            checkServerHealth().then(() => {
+                loadDashboardData();
+                loadNotifications();
+            }).catch(() => {
+                showOfflineState();
+            });
+        }
         
         // ============================================
         // USER INFO
