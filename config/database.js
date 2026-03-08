@@ -1,17 +1,34 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-// Create connection pool
+// SSL configuration for cloud databases (Aiven, AWS RDS, etc.)
+const getSSLConfig = () => {
+  if (process.env.DB_SSL === 'false' || process.env.DB_SSL === 'false') {
+    return undefined;
+  }
+  // Default to SSL for production/Vercel
+  if (process.env.DB_SSL === 'true' || process.env.NODE_ENV === 'production') {
+    return {
+      rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED !== 'false'
+    };
+  }
+  return undefined;
+};
+
+// Create connection pool - optimized for Vercel serverless
 const pool = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_NAME || 'online_banking',
+  port: parseInt(process.env.DB_PORT) || 3306,
   waitForConnections: true,
-  connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT) || 10,
+  connectionLimit: process.env.NODE_ENV === 'production' ? 2 : 10,
   queueLimit: 0,
   enableKeepAlive: true,
-  keepAliveInitialDelay: 0
+  keepAliveInitialDelay: 0,
+  connectTimeout: 10000,
+  ssl: getSSLConfig()
 });
 
 // Test database connection
@@ -23,11 +40,12 @@ const testConnection = async () => {
     return true;
   } catch (error) {
     console.error('❌ Database connection failed:', error.message);
+    console.error('  Code:', error.code);
     return false;
   }
 };
 
-// Helper function to execute queries with parameterized values
+// Helper function to execute queries
 const executeQuery = async (query, params = []) => {
   try {
     const [results] = await pool.execute(query, params);
@@ -54,9 +72,4 @@ const transaction = async (callback) => {
   }
 };
 
-module.exports = {
-  pool,
-  testConnection,
-  executeQuery,
-  transaction
-};
+module.exports = { pool, testConnection, executeQuery, transaction };

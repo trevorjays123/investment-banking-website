@@ -102,6 +102,12 @@ router.post('/login', [
 
     const { email, password } = req.body;
 
+    // Check JWT_SECRET exists
+    if (!process.env.JWT_SECRET) {
+      console.error('❌ JWT_SECRET not configured');
+      return res.status(500).json({ error: 'Server configuration error' });
+    }
+
     // Add detailed logging at each step
     console.log('1. Login attempt for email:', email);
 
