@@ -3,11 +3,14 @@ require('dotenv').config();
 
 // SSL configuration for cloud databases (Aiven, AWS RDS, etc.)
 const getSSLConfig = () => {
-  if (process.env.DB_SSL === 'false' || process.env.DB_SSL === 'false') {
+  // If explicitly disabled, no SSL
+  if (process.env.DB_SSL === 'false' || process.env.DB_SSL === '0') {
+    console.log('🔒 SSL: Disabled (DB_SSL=false)');
     return undefined;
   }
-  // Default to SSL for production/Vercel
-  if (process.env.DB_SSL === 'true' || process.env.NODE_ENV === 'production') {
+  // Default to SSL for production/Vercel (or if DB_SSL is 'true')
+  if (process.env.DB_SSL === 'true' || process.env.NODE_ENV === 'production' || !process.env.DB_SSL) {
+    console.log('🔒 SSL: Enabled for production');
     return {
       rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED !== 'false'
     };
@@ -36,11 +39,17 @@ const testConnection = async () => {
   try {
     const connection = await pool.getConnection();
     console.log('✅ Database connected successfully');
+    console.log('   Host:', process.env.DB_HOST);
+    console.log('   Database:', process.env.DB_NAME);
     connection.release();
     return true;
   } catch (error) {
-    console.error('❌ Database connection failed:', error.message);
-    console.error('  Code:', error.code);
+    console.error('❌ Database connection failed:');
+    console.error('   Message:', error.message);
+    console.error('   Code:', error.code);
+    console.error('   Host:', process.env.DB_HOST || 'not set');
+    console.error('   User:', process.env.DB_USER || 'not set');
+    console.error('   Database:', process.env.DB_NAME || 'not set');
     return false;
   }
 };
@@ -51,7 +60,9 @@ const executeQuery = async (query, params = []) => {
     const [results] = await pool.execute(query, params);
     return results;
   } catch (error) {
-    console.error('Query error:', error.message);
+    console.error('❌ Query error:', error.message);
+    console.error('   Query:', query.substring(0, 100));
+    console.error('   Code:', error.code);
     throw error;
   }
 };

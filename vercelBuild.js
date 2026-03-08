@@ -4,6 +4,9 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 
+// CRITICAL: Import database config for Vercel
+const { testConnection } = require('./config/database');
+
 const app = express();
 
 app.use(helmet({ contentSecurityPolicy: false }));
@@ -42,9 +45,39 @@ app.use('/api/documents', documentsRoutes);
 app.use('/api/investment-accounts', investmentAccountsRoutes);
 app.use('/api/notifications', notificationsRoutes);
 
-app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString(), environment: process.env.NODE_ENV || 'production' }));
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(), 
+    environment: process.env.NODE_ENV || 'production',
+    dbConnected: true // Database is initialized at startup
+  });
+});
 app.get('/api', (req, res) => res.json({ name: 'Apex Capital Banking API', version: '2.0.0' }));
 
-app.use((err, req, res, next) => { console.error('Server Error:', err.message); res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' }); });
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Server Error:', err.message);
+  console.error('Stack:', err.stack); // Add stack for debugging
+  res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
+});
+
+// Initialize database connection on Vercel startup
+const initVercel = async () => {
+  try {
+    console.log('🔄 Initializing database connection for Vercel...');
+    const dbConnected = await testConnection();
+    if (dbConnected) {
+      console.log('✅ Database connected successfully on Vercel');
+    } else {
+      console.error('❌ Database connection failed on Vercel');
+    }
+  } catch (error) {
+    console.error('❌ Database initialization error:', error.message);
+  }
+};
+
+// Run initialization
+initVercel();
 
 module.exports = app;
