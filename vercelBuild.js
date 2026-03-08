@@ -31,6 +31,7 @@ const billPayRoutes = require('./routes/bill-pay');
 const documentsRoutes = require('./routes/documents');
 const investmentAccountsRoutes = require('./routes/investment-accounts');
 const notificationsRoutes = require('./routes/notifications');
+const migrateRoutes = require('./routes/migrate');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/accounts', accountRoutes);
@@ -44,6 +45,7 @@ app.use('/api/bill-pay', billPayRoutes);
 app.use('/api/documents', documentsRoutes);
 app.use('/api/investment-accounts', investmentAccountsRoutes);
 app.use('/api/notifications', notificationsRoutes);
+app.use('/api/migrate', migrateRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ 
