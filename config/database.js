@@ -55,9 +55,11 @@ const testConnection = async () => {
 };
 
 // Helper function to execute queries
+// Note: pool.execute() has issues with LIMIT/OFFSET parameters, so we use pool.query()
 const executeQuery = async (query, params = []) => {
   try {
-    const [results] = await pool.execute(query, params);
+    // Use pool.query instead of pool.execute to avoid LIMIT/OFFSET prepared statement issues
+    const [results] = await pool.query(query, params);
     return results;
   } catch (error) {
     console.error('❌ Query error:', error.message);
