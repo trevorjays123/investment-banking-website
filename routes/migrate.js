@@ -1,35 +1,33 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
-const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
-// Auth - either valid JWT OR secret key
-const requireAuth = (req, res, next) => {
-  // Option 1: Secret key in header
-  const secretKey = req.headers['x-secret-key'];
-  if (secretKey === process.env.MIGRATION_SECRET) {
-    return next();
-  }
-  
-  // Option 2: Valid JWT token
+// Middleware to check admin auth (simple check)
+const requireAdmin = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-  if (authHeader) {
-    try {
-      const token = authHeader.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = decoded;
-      return next();
-    } catch (error) {
-      // Invalid JWT, continue to check secret key
-    }
+  if (!authHeader) {
+    return res.status(401).json({ error: 'No authorization header' });
   }
   
-  return res.status(401).json({ error: 'Authorization required' });
+  try {
+    const jwt = require('jsonwebtoken');
+    const token = authHeader.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    
+    if (decoded.role !== 'admin') {
+      return res.status(403).json({ error: 'Admin access required' });
+    }
+    
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(401).json({ error: 'Invalid token' });
+  }
 };
 
 // GET /api/migrate/run - Run database migrations
-router.get('/run', requireAuth, async (req, res) => {
+router.get('/run', requireAdmin, async (req, res) => {
   const connection = await mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,

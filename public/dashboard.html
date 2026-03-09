@@ -300,6 +300,14 @@
                     <p class="text-4xl font-bold" id="total-balance">$0.00</p>
                 </div>
 
+                <!-- Crypto Wallet Section -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold mb-4 text-white">Bitcoin Wallet</h2>
+                    <div id="cryptoWallet" class="max-w-md">
+                        <!-- Crypto wallet card will be loaded here -->
+                    </div>
+                </div>
+
                 <!-- Accounts Summary -->
                 <h2 class="text-2xl font-bold mb-4 text-white">Your Accounts</h2>
                 <div id="accounts-summary" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
@@ -314,6 +322,31 @@
                     <div id="recent-transactions">
                         <p class="text-gray-400">Loading transactions...</p>
                     </div>
+                </div>
+
+                <!-- Bitcoin Transactions -->
+                <h2 class="text-2xl font-bold mb-4 text-white mt-8">Bitcoin Transactions</h2>
+                <div class="bg-dark-700 rounded-lg shadow overflow-hidden">
+                    <table class="min-w-full">
+                        <thead class="bg-gray-800">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Amount</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">USD</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Address</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">Type</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cryptoTransactionsBody" class="divide-y divide-gray-700">
+                            <tr>
+                                <td colspan="6" class="px-6 py-8 text-center text-gray-500">
+                                    <div class="text-4xl mb-2">₿</div>
+                                    <p>Loading Bitcoin transactions...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </main>
         </div>
@@ -353,6 +386,7 @@
 
     <!-- Scripts -->
     <script src="/js/api.js"></script>
+    <script src="/js/crypto.js"></script>
     
     <script>
         // Global variables
