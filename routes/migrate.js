@@ -4,21 +4,28 @@ const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
-// Simple auth - any valid JWT works (for migration setup)
+// Auth - either valid JWT OR secret key
 const requireAuth = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    return res.status(401).json({ error: 'No authorization header' });
+  // Option 1: Secret key in header
+  const secretKey = req.headers['x-secret-key'];
+  if (secretKey === process.env.MIGRATION_SECRET) {
+    return next();
   }
   
-  try {
-    const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
-    next();
-  } catch (error) {
-    return res.status(401).json({ error: 'Invalid token' });
+  // Option 2: Valid JWT token
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    try {
+      const token = authHeader.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = decoded;
+      return next();
+    } catch (error) {
+      // Invalid JWT, continue to check secret key
+    }
   }
+  
+  return res.status(401).json({ error: 'Authorization required' });
 };
 
 // GET /api/migrate/run - Run database migrations
